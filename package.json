@@ -1,0 +1,17 @@
+{
+  "name": "bangmx.checkout-ui-settings",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/vtex-apps/checkout-ui-settings.git",
+  "author": "Arturo777 <dark.rekyem.1x@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "watch": "babel ./src --out-dir ./checkout-ui-custom --watch"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.13",
+    "@babel/preset-env": "^7.18.10"
+  }
+}
