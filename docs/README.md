@@ -26,3 +26,47 @@ Once the app is deployed and installed in the account, every scripts contained i
 
 
 :warning: **Scripts used by Checkout are linked to the Checkout UI Settings version that's installed in your store**. If a prior app version was already installed and your want to change the scripts linked to it, you'll need to repeat the already existing code and thereafter launch the app's new version containing the changes you just did. Housekeeper is responsible for updating app versions in the accounts it's installed in.
+
+## Redirect to checkout cart
+
+### Elemplo de redirect
+https://checkout--bangmx.myvtex.com/checkout/cart/add/?sku=1734013&qty=1&seller=1&sc=1&sku=1200465&qty=1&seller=1&sc=1&
+
+### Item no disponible: 
+https://checkout--bangmx.myvtex.com/checkout?cartId=tFXRtvGpdjsZyD_8JoVHwHfWgQG1HdAbt1XV8Ix7RMPzeDh_-h4mHkpfHGS3uIok/#/cart
+
+### Carrito vacío: 
+https://checkout--bangmx.myvtex.com/checkout?cartId=m-AHQgXS0zdRhCTU3YItKKtrP78nrLQus7MMPeaalZJ2f-jM5kylMnKi3JWpVBaD/#/cart
+
+### Get Cart Failed: 
+```
+{
+    "code": "APICD001",
+    "text": "Get cart failed",
+    "statusCode": 200,
+    "switchToCountry": null,
+    "type": "getCartFailed"
+}
+```
+https://checkout--bangmx.myvtex.com/checkout?cartId=mE2WFNBcgT7EsdM9dWh-Zkv7GbQpkTqxycxuMaefNmwsVXXvO70GRgUsxRPTcmN7/#/cart
+
+### Empty cart: 
+```
+{}
+```
+https://checkout--bangmx.myvtex.com/checkout?cartId=vbmnQ4ILiGuaVjRlvGOdMxs0n9RTj3olzyl4SvCYkThBkElgYjEz4864afKMYutp/#/cart
+
+### Empty cart: 
+```
+{}
+```
+https://checkout--bangmx.myvtex.com/checkout?cartId=SV6pBSvIY7pdHu2ze9FmSrmJlUXSUyel17xMKAGEdUQhreQYg3NHvb3dshOCWn9v/#/cart
+
+### 2 products: 
+https://checkout--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
+
+
+
+
+
+

@@ -1,6 +1,48 @@
 "use strict";
 
 // WARNING: THE USAGE OF CUSTOM SCRIPTS IS NOT SUPPORTED. VTEX IS NOT LIABLE FOR ANY DAMAGES THIS MAY CAUSE. THIS MAY BREAK YOUR STORE AND STOP SALES. IN CASE OF ERRORS, PLEASE DELETE THE CONTENT OF THIS SCRIPT.
+var removeLoadingSpinner = function removeLoadingSpinner() {
+  document.querySelector('.checkout-container').style.display = 'block';
+  document.querySelector('.loading2').style.display = 'none';
+};
+
+var getCart = function getCart() {
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  var cartId = urlParams.get('cartId');
+  if (!cartId) return removeLoadingSpinner();
+  vtexjs.checkout.removeAllItems();
+  fetch("/BnOApi/getCart/".concat(cartId), {
+    method: 'GET'
+  }).then(function (x) {
+    return x.json();
+  }).then(function (cart) {
+    console.log({
+      cart: cart
+    });
+    var lineItems = cart.lineItems; //`/checkout/cart/add/?sku=1734013&qty=1&seller=1&sc=1&sku=1200465&qty=1&seller=1&sc=1`
+
+    var newUrlCart = lineItems.reduce(function (acc, el) {
+      return acc.concat("sku=".concat(el.sku, "&qty=").concat(el.quantity, "&seller=1&sc=1&"));
+    }, "/checkout/cart/add/?");
+    window.location = newUrlCart;
+    console.log({
+      newUrlCart: newUrlCart
+    });
+    return lineItems;
+  }).then(function (lineItems) {
+    var bodyToCreateLog = lineItems.map(function (item) {
+      return {
+        price: item.price,
+        availableQuantity: item.availableQuantity
+      };
+    });
+    console.log({
+      bodyToCreateLog: bodyToCreateLog
+    });
+  });
+};
+
 var addBeoSupremeFont = function addBeoSupremeFont() {
   var linkElement = document.createElement('link');
   linkElement.setAttribute('rel', 'stylesheet');
@@ -122,6 +164,7 @@ window.onload = function (event) {
   console.log('onload::', {
     event: event
   });
+  getCart();
 };
 
 document.addEventListener('DOMContentLoaded', function (event) {
@@ -314,7 +357,5 @@ document.addEventListener('readystatechange', function () {
     handleInputFocus(['client-email', 'client-first-name', 'client-last-name', 'client-phone']);
     createBackButton('#/email', '#shipping-data');
     createBackButton('#/shipping', '#payment-data');
-    document.querySelector('.checkout-container').style.display = 'block';
-    document.querySelector('.loading2').style.display = 'none';
   }
 });

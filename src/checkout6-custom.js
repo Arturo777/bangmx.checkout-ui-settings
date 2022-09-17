@@ -1,4 +1,50 @@
 // WARNING: THE USAGE OF CUSTOM SCRIPTS IS NOT SUPPORTED. VTEX IS NOT LIABLE FOR ANY DAMAGES THIS MAY CAUSE. THIS MAY BREAK YOUR STORE AND STOP SALES. IN CASE OF ERRORS, PLEASE DELETE THE CONTENT OF THIS SCRIPT.
+
+const removeLoadingSpinner = () => {
+  document.querySelector('.checkout-container').style.display = 'block'
+  document.querySelector('.loading2').style.display = 'none'
+}
+
+const getCart = () => {
+  const queryString = window.location.search
+  const urlParams = new URLSearchParams(queryString)
+  const cartId = urlParams.get('cartId')
+
+
+
+  if (!cartId) return removeLoadingSpinner()
+
+  vtexjs.checkout.removeAllItems()
+  fetch(`/BnOApi/getCart/${cartId}`, {
+    method: 'GET',
+  })
+  .then(x => x.json())
+  .then(cart => {
+    console.log({cart})
+    const { lineItems } = cart
+
+    //`/checkout/cart/add/?sku=1734013&qty=1&seller=1&sc=1&sku=1200465&qty=1&seller=1&sc=1`
+    const newUrlCart = lineItems.reduce((acc, el) => {
+      return acc.concat(`sku=${el.sku}&qty=${el.quantity}&seller=1&sc=1&`)
+    }, `/checkout/cart/add/?`)
+
+    window.location = newUrlCart
+
+    console.log({newUrlCart})
+
+    return lineItems
+  })
+  .then(lineItems => {
+
+    const bodyToCreateLog = lineItems.map(item => ({
+      price: item.price,
+      availableQuantity: item.availableQuantity
+    }))
+
+    console.log({ bodyToCreateLog })
+  })
+}
+
 const addBeoSupremeFont = () => {
   const linkElement = document.createElement('link')
   linkElement.setAttribute('rel', 'stylesheet');
@@ -116,7 +162,7 @@ const changeElement = (elem, newText) => {
 
 window.onload = function(event) {
   console.log('onload::', {event});
-
+  getCart()
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -389,8 +435,7 @@ document.addEventListener('readystatechange', () => {
     createBackButton('#/shipping', '#payment-data')
 
 
-    document.querySelector('.checkout-container').style.display = 'block'
-    document.querySelector('.loading2').style.display = 'none'
+
   }
 
 })
