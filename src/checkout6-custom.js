@@ -1,18 +1,90 @@
 // WARNING: THE USAGE OF CUSTOM SCRIPTS IS NOT SUPPORTED. VTEX IS NOT LIABLE FOR ANY DAMAGES THIS MAY CAUSE. THIS MAY BREAK YOUR STORE AND STOP SALES. IN CASE OF ERRORS, PLEASE DELETE THE CONTENT OF THIS SCRIPT.
 
+const sendProductLogs = bodies => {
+  bodies.length &&
+    bodies.map(body => {
+      try {
+      fetch('/logs/', {
+          method: 'POST',
+          body: JSON.stringify(body),
+        })
+      } catch (error) {
+        console.log({
+          description: "Error al enviar logs",
+          skuId: body.VTEXSkuID,
+          error,
+        })
+        throw new Error(error)
+      }
+    })
+}
+
 const removeLoadingSpinner = () => {
   document.querySelector('.checkout-container').style.display = 'block'
   document.querySelector('.loading2').style.display = 'none'
 }
 
-const getCart = () => {
+const getVtexSkuByProductId = (productId, skuId)  => {
+  return fetch(`/vtex/catalog/${productId}`).then(x => x.json())
+  .then(res => {
+
+    if (!res.skus.length) alert(`No skus by productId: ${productId}`)
+
+    const selectedSku = res.skus
+      .find(sku => skuId == sku.sku)
+
+    return {
+      VTEXSkuID: String(selectedSku.sku),
+      VTEXSkuName: selectedSku.skuname,
+      VTEXPrice: selectedSku.bestPrice,
+      VTEXQuantity: selectedSku.availablequantity
+    }
+  })
+}
+
+const getCart = async () => {
   const queryString = window.location.search
   const urlParams = new URLSearchParams(queryString)
   const cartId = urlParams.get('cartId')
 
 
 
-  if (!cartId) return removeLoadingSpinner()
+  if (!cartId) {
+    if (sessionStorage.getItem('bnoItems')) {
+      const vtexProducts = vtexjs.checkout.orderForm.items.map(item => ({
+        productId: item.productId,
+        skuId: item.id
+      }))
+
+      const vtexItemsPromise = vtexProducts.map(vtexProduct => {
+        return getVtexSkuByProductId(vtexProduct.productId, vtexProduct.skuId)
+      })
+
+      const vtexItems = await Promise.all(vtexItemsPromise)
+      const bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'))
+      console.log({bnoItems})
+      console.log({vtexItems})
+
+
+      const combinedItems = vtexItems.map((item, i) => ({
+        ...bnoItems[i],
+        ...item,
+        DateTime: new Date()
+      }))
+
+      const differentItems = combinedItems.filter(item => {
+        return item.BNOPrice !== item.VTEXPrice ||
+        item.BNOQuantity !== item.VTEXQuantity
+      })
+
+      sendProductLogs(differentItems)
+
+      // sessionStorage.removeItem('bnoItems')
+    }
+
+    return removeLoadingSpinner()
+  }
+
 
   vtexjs.checkout.removeAllItems()
   fetch(`/BnOApi/getCart/${cartId}`, {
@@ -21,6 +93,11 @@ const getCart = () => {
   .then(x => x.json())
   .then(cart => {
     console.log({cart})
+
+    if (!lineItems in cart) {
+      return alert('No line items in cart')
+    }
+
     const { lineItems } = cart
 
     //`/checkout/cart/add/?sku=1734013&qty=1&seller=1&sc=1&sku=1200465&qty=1&seller=1&sc=1`
@@ -28,20 +105,22 @@ const getCart = () => {
       return acc.concat(`sku=${el.sku}&qty=${el.quantity}&seller=1&sc=1&`)
     }, `/checkout/cart/add/?`)
 
-    window.location = newUrlCart
 
     console.log({newUrlCart})
 
-    return lineItems
+    return {lineItems, newUrlCart, cartId}
   })
-  .then(lineItems => {
-
-    const bodyToCreateLog = lineItems.map(item => ({
-      price: item.price,
-      availableQuantity: item.availableQuantity
+  .then(({lineItems, newUrlCart, cartId}) => {
+    const bnoItems = lineItems.map(item => ({
+      CartId: cartId,
+      BNOSkuID: item.sku,
+      BNOSkuName: item.variant.key,
+      BNOPrice: item.price.value.centAmount,
+      BNOQuantity: item.availableQuantity,
     }))
 
-    console.log({ bodyToCreateLog })
+    sessionStorage.setItem('bnoItems', JSON.stringify(bnoItems))
+    window.location = newUrlCart
   })
 }
 
