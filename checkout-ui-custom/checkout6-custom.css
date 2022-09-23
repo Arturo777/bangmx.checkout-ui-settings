@@ -4,10 +4,14 @@ body#checkoutMainContainer {
 }
 
 /* Displays the option to enter a foreign document */
-.document-box { display: none !important; }
+.document-box {
+  display: none !important;
+}
 
 /* Displays the option to enter an international phone */
-.phone-box { display: none !important; }
+.phone-box {
+  display: none !important;
+}
 
 .checkout--bangmx-myvtex-com {
   background-color: #F9F9F9;
@@ -20,9 +24,9 @@ body#checkoutMainContainer {
   height: 60px;
   padding: 0px 36px;
   background-color: #FEFEFE;
-  box-shadow: 2px -16px 10px 16px rgba(0,0,0,0.43);
--webkit-box-shadow: 2px -16px 10px 16px rgba(0,0,0,0.43);
--moz-box-shadow: 2px -16px 10px 16px rgba(0,0,0,0.43);
+  box-shadow: 2px -16px 10px 16px rgba(0, 0, 0, 0.43);
+  -webkit-box-shadow: 2px -16px 10px 16px rgba(0, 0, 0, 0.43);
+  -moz-box-shadow: 2px -16px 10px 16px rgba(0, 0, 0, 0.43);
 }
 
 .bo-header__buttons {
@@ -37,11 +41,11 @@ body#checkoutMainContainer {
   height: 60px;
 }
 
-.bo-header__logo > div {
+.bo-header__logo>div {
   padding-top: 8px;
 }
 
-.bo-header__buttons > div {
+.bo-header__buttons>div {
   margin: 0 15px;
   padding-top: 10px;
 }
@@ -50,15 +54,18 @@ body#checkoutMainContainer {
   width: 15px;
 
 }
+
 .bo-header__store-locator svg {
   width: 16px;
 
 }
+
 .bo-header__cart svg {
   width: 21px;
 }
 
-.btn-success, .button.checkEmailAuthConflict__modal--button {
+.btn-success,
+.button.checkEmailAuthConflict__modal--button {
   border-radius: 24px;
   text-align: center;
   padding: 10px 32px;
@@ -70,7 +77,8 @@ body#checkoutMainContainer {
   margin-top: 20px !important;
 }
 
-.btn-success:hover, .button.checkEmailAuthConflict__modal--button:hover {
+.btn-success:hover,
+.button.checkEmailAuthConflict__modal--button:hover {
   background: none !important;
   color: rgb(25, 24, 23) !important;
   border-color: rgb(235, 232, 229);
@@ -91,7 +99,8 @@ body#checkoutMainContainer {
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 4px 0px;
 }
 
-.cart-more-options, .cart-template-holder .cart {
+.cart-more-options,
+.cart-template-holder .cart {
   background: none;
   padding: 0;
 }
@@ -100,6 +109,7 @@ body#checkoutMainContainer {
   order: 1;
   width: 70%;
 }
+
 .body-cart-vertical .summary-template-holder {
   width: 30%;
 }
@@ -110,11 +120,13 @@ body#checkoutMainContainer {
   font-size: 16px;
 }
 
-.forms.coupon-column.summary-coupon-wrap.text-center {
-  display: none;
-}
+/* .forms.coupon-column.summary-coupon-wrap.text-center {
 
-.table.cart-items td.product-image a, .table.cart-items td.product-image img {
+  display: none;
+} */
+
+.table.cart-items td.product-image a,
+.table.cart-items td.product-image img {
   width: auto;
   display: block;
   max-width: 55px;
@@ -144,13 +156,14 @@ body#checkoutMainContainer {
   min-width: 93px;
 }
 
-.table.cart-items td.product-image a, .table.cart-items td.product-image img {
+.table.cart-items td.product-image a,
+.table.cart-items td.product-image img {
   max-width: 100px;
   width: 100px;
 }
 
 .table.cart-items tr.product-item {
-  background-color:rgb(250, 250, 250);
+  background-color: rgb(250, 250, 250);
   border: none;
   padding: 20px;
   margin-top: 5px;
@@ -160,6 +173,7 @@ body#checkoutMainContainer {
   display: flex;
   justify-content: center;
 }
+
 .bo-footer-feature {
   width: 33%;
   padding-top: 27px;
@@ -179,7 +193,17 @@ body#checkoutMainContainer {
   color: rgb(85, 85, 85);
 }
 
-body.v-custom-step-profile .client-pre-email h3.client-pre-email-h span:before, body.v-custom-step-shipping .client-pre-email h3.client-pre-email-h span:before, body.v-custom-step-shipping .client-profile-data .accordion-toggle>span:before, body.v-custom-step-payment .client-pre-email h3.client-pre-email-h span:before, body.v-custom-step-payment .client-profile-data .accordion-toggle>span:before, body.v-custom-step-payment .shipping-data .accordion-toggle:before, body.v-custom-step-email .client-pre-email h3.client-pre-email-h span:before, body.v-custom-step-profile .client-profile-data .accordion-toggle>span:before, body.v-custom-step-shipping .shipping-data .accordion-toggle:before, body.v-custom-step-payment .payment-data .accordion-toggle>span:not(.payment-edit-link):before, body.js-vcustom-hideEmailStep .client-profile-data .accordion-toggle>span:before {
+body.v-custom-step-profile .client-pre-email h3.client-pre-email-h span:before,
+body.v-custom-step-shipping .client-pre-email h3.client-pre-email-h span:before,
+body.v-custom-step-shipping .client-profile-data .accordion-toggle>span:before,
+body.v-custom-step-payment .client-pre-email h3.client-pre-email-h span:before,
+body.v-custom-step-payment .client-profile-data .accordion-toggle>span:before,
+body.v-custom-step-payment .shipping-data .accordion-toggle:before,
+body.v-custom-step-email .client-pre-email h3.client-pre-email-h span:before,
+body.v-custom-step-profile .client-profile-data .accordion-toggle>span:before,
+body.v-custom-step-shipping .shipping-data .accordion-toggle:before,
+body.v-custom-step-payment .payment-data .accordion-toggle>span:not(.payment-edit-link):before,
+body.js-vcustom-hideEmailStep .client-profile-data .accordion-toggle>span:before {
   content: "1/3" !important;
   font-size: 20px;
   border: none;
@@ -206,7 +230,13 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
   color: #000000;
 }
 
-.cart-more-options .srp-container .srp-main-title, .client-pre-email h3.client-pre-email-h span:after, .orderform-template-holder #client-profile-data form.client-pre-email .accordion-toggle, .orderform-template-holder #client-profile-data .step.client-profile-data .accordion-toggle, .orderform-template-holder #shipping-data .accordion-toggle, .orderform-template-holder #payment-data .accordion-toggle, .orderform-template .cart-template.mini-cart h2 {
+.cart-more-options .srp-container .srp-main-title,
+.client-pre-email h3.client-pre-email-h span:after,
+.orderform-template-holder #client-profile-data form.client-pre-email .accordion-toggle,
+.orderform-template-holder #client-profile-data .step.client-profile-data .accordion-toggle,
+.orderform-template-holder #shipping-data .accordion-toggle,
+.orderform-template-holder #payment-data .accordion-toggle,
+.orderform-template .cart-template.mini-cart h2 {
   line-height: initial;
   display: block;
   text-transform: uppercase;
@@ -218,7 +248,8 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
   display: none;
 }
 
-.orderform-template-holder .step .input.text label, .vcustom--vtex-omnishipping-1-x-address label {
+.orderform-template-holder .step .input.text label,
+.vcustom--vtex-omnishipping-1-x-address label {
   color: rgb(85, 85, 85);
   font-size: 0.875rem;
   letter-spacing: 0.5px;
@@ -227,7 +258,9 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
   transition: all 0.3s ease 0s;
 }
 
-#client-profile-data, #shipping-data, #payment-data {
+#client-profile-data,
+#shipping-data,
+#payment-data {
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 4px 0px;
   position: relative;
 }
@@ -251,7 +284,7 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
   margin-bottom: 20px;
 }
 
-.accordion-toggle > span {
+.accordion-toggle>span {
   color: #fff;
 }
 
@@ -281,12 +314,17 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
   box-shadow: inset 0 0 0 3px #fff;
 }
 
+.orderform-template-holder #payment-data .v-custom-payment-item-wrap .payment-group-item-text:before {
+  border-radius: 0px;
+}
+
 .orderform-template-holder #payment-data .v-custom-payment-item-wrap .payment-group-item.active {
   background: none;
   border-bottom: none;
 }
 
-.orderform-template-holder #payment-data .v-custom-payment-item-wrap.active, .orderform-template-holder #payment-data .v-custom-payment-item-wrap:hover {
+.orderform-template-holder #payment-data .v-custom-payment-item-wrap.active,
+.orderform-template-holder #payment-data .v-custom-payment-item-wrap:hover {
   box-shadow: none;
   border: none;
 }
@@ -360,6 +398,7 @@ p.submit.btn-submit-wrapper {
   display: flex;
   justify-content: center;
 }
+
 .header1 h1 {
   font-size: 12px;
   margin: 0;
@@ -385,7 +424,7 @@ p.submit.btn-submit-wrapper {
   opacity: 0.5;
 }
 
-.form-title > p {
+.form-title>p {
   font-size: 14px;
   letter-spacing: 2px;
   font-weight: 500;
@@ -396,7 +435,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 input.input-xlarge {
@@ -455,7 +494,8 @@ div.custom-cart-template-wrap {
   padding-bottom: 20px !important;
 }
 
-.orderform-template .cart-template.mini-cart .summary-template-holder .summary>.summary-coupon-wrap, .orderform-template .cart-template.mini-cart .summary-template-holder .summary-coupon-wrap>.summary-coupon {
+.orderform-template .cart-template.mini-cart .summary-template-holder .summary>.summary-coupon-wrap,
+.orderform-template .cart-template.mini-cart .summary-template-holder .summary-coupon-wrap>.summary-coupon {
   display: none !important;
 }
 
@@ -476,6 +516,7 @@ span.product-name {
   font-size: 12px;
   font-weight: 400;
 }
+
 .orderform-template .cart-template.mini-cart .quantity:before {
   content: 'Cantidad '
 
@@ -485,7 +526,7 @@ div.description {
   display: block !important;
 }
 
-div.description > strong.price {
+div.description>strong.price {
   font-size: 14px;
   color: #000000;
   margin: 0;
@@ -520,15 +561,15 @@ table.table tfoot td.monetary {
   border-bottom: 3px solid #EEEEEE !important;
 }
 
-.orderform-template > div.orderform-template-holder {
+.orderform-template>div.orderform-template-holder {
   max-width: 690px;
 }
 
-.orderform-template > div.cart-template.mini-cart {
+.orderform-template>div.cart-template.mini-cart {
   max-width: 461px;
 }
 
-.checkout-container > div.orderform-template {
+.checkout-container>div.orderform-template {
   justify-content: center;
 }
 
@@ -602,9 +643,7 @@ div#cartLoadedDiv {
   order: 0;
 }
 
-div.summary-template-holder {
-
-}
+div.summary-template-holder {}
 
 .table.cart-items thead {
   display: none;
@@ -649,12 +688,12 @@ div#cartLoadedDiv {
   justify-content: center;
 }
 
-div.title-cart-products > h4 {
+div.title-cart-products>h4 {
   font-size: 24px;
   color: #000;
 }
 
-div.title-cart-summary > h4 {
+div.title-cart-summary>h4 {
   font-size: 20px;
   color: #000;
 }
@@ -664,7 +703,8 @@ div.title-cart-summary > h4 {
   font-weight: 400;
 }
 
-.table.cart-items td.product-name a, .table.cart-items td.product-name a:hover {
+.table.cart-items td.product-name a,
+.table.cart-items td.product-name a:hover {
   font-weight: 400;
   color: #000000;
 }
@@ -692,12 +732,12 @@ div.title-cart-summary > h4 {
   background-size: 10px 10px;
   width: 10px;
   height: 10px;
-  content:"";
+  content: "";
 }
 
 @media (min-width: 769px) {
   .table.cart-items tbody tr td.product-name {
-      width: 100% !important;
+    width: 100% !important;
   }
 }
 
@@ -712,4 +752,47 @@ div.title-cart-summary > h4 {
 
 span.shipping-date.pull-left {
   margin-top: 20px;
+}
+
+#cart-coupon-add {
+  border-radius: 24px;
+  text-align: center;
+  border-color: rgb(255, 195, 86);
+  background: rgb(255, 195, 86);
+  color: rgb(25, 24, 23);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+#cart-coupon-add:hover {
+  background: none !important;
+  color: rgb(25, 24, 23) !important;
+  border-color: rgb(235, 232, 229);
+}
+
+#cart-coupon {
+  border-radius: 24px;
+}
+
+#force-shipping-fields {
+  color: rgb(85, 85, 85);
+}
+
+/* .client-profile-data::after {
+  border-top: solid;
+  width: 33%;
+} */
+
+input[type='radio'] {
+  box-sizing: border-box;
+  appearance: none;
+  background: white;
+  outline: 2px solid #333;
+  border: 3px solid white;
+  width: 16px;
+  height: 16px;
+}
+
+input[type='radio']:checked {
+  background: #333;
 }
