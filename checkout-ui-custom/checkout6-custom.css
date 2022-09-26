@@ -414,7 +414,6 @@ p.submit.btn-submit-wrapper {
   display: flex;
   height: 100vh;
   justify-content: center;
-  width: 99.3vw;
   align-items: center;
   text-align: center;
 }
@@ -795,4 +794,18 @@ input[type='radio'] {
 
 input[type='radio']:checked {
   background: #333;
+}
+
+.loading .loading-img {
+  height: 94%;
+}
+
+.loading .loading-bg {
+  display: none;
+}
+
+.empty-cart-content {
+  display: block;
+  position: absolute;
+  left: calc(50% - 577px);
 }

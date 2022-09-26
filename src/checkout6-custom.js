@@ -1,5 +1,15 @@
 // WARNING: THE USAGE OF CUSTOM SCRIPTS IS NOT SUPPORTED. VTEX IS NOT LIABLE FOR ANY DAMAGES THIS MAY CAUSE. THIS MAY BREAK YOUR STORE AND STOP SALES. IN CASE OF ERRORS, PLEASE DELETE THE CONTENT OF THIS SCRIPT.
 
+const getAccessToken = () => {
+  return fetch('/BnOApi/getToken/', {
+    method: 'POST'
+  }).then(x => x.json()).then(x => {
+    accessToken = x.access_token
+
+    return x.access_token
+  })
+}
+
 const sendProductLogs = bodies => {
   bodies.length &&
     bodies.map(body => {
@@ -42,6 +52,35 @@ const getVtexSkuByProductId = (productId, skuId)  => {
   })
 }
 
+const compareProducts = async () => {
+
+  const vtexProducts = vtexjs.checkout.orderForm.items.map(item => ({
+    productId: item.productId,
+    skuId: item.id
+  }))
+
+  const vtexItemsPromise = vtexProducts.map(vtexProduct => {
+    return getVtexSkuByProductId(vtexProduct.productId, vtexProduct.skuId)
+  })
+
+  const vtexItems = await Promise.all(vtexItemsPromise)
+  const bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'))
+
+  const combinedItems = vtexItems.map((item, i) => ({
+    ...bnoItems[i],
+    ...item,
+    DateTime: new Date()
+  }))
+
+  const differentItems = combinedItems.filter(item => {
+    return item.BNOPrice !== item.VTEXPrice ||
+    item.BNOQuantity !== item.VTEXQuantity
+  })
+
+
+  sendProductLogs(differentItems)
+}
+
 const getCart = async () => {
   const queryString = window.location.search
   const urlParams = new URLSearchParams(queryString)
@@ -51,54 +90,37 @@ const getCart = async () => {
 
   if (!cartId) {
     if (sessionStorage.getItem('bnoItems')) {
-      const vtexProducts = vtexjs.checkout.orderForm.items.map(item => ({
-        productId: item.productId,
-        skuId: item.id
-      }))
-
-      const vtexItemsPromise = vtexProducts.map(vtexProduct => {
-        return getVtexSkuByProductId(vtexProduct.productId, vtexProduct.skuId)
-      })
-
-      const vtexItems = await Promise.all(vtexItemsPromise)
-      const bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'))
-      console.log({bnoItems})
-      console.log({vtexItems})
-
-
-      const combinedItems = vtexItems.map((item, i) => ({
-        ...bnoItems[i],
-        ...item,
-        DateTime: new Date()
-      }))
-
-      const differentItems = combinedItems.filter(item => {
-        return item.BNOPrice !== item.VTEXPrice ||
-        item.BNOQuantity !== item.VTEXQuantity
-      })
-
-      sendProductLogs(differentItems)
-
-      // sessionStorage.removeItem('bnoItems')
+      compareProducts()
+    } else {
+      vtexjs.checkout.removeAllItems()
     }
 
     return removeLoadingSpinner()
   }
 
+  sessionStorage.setItem('cartId', cartId)
 
   vtexjs.checkout.removeAllItems()
-  fetch(`/BnOApi/getCart/${cartId}`, {
+
+  const accessToken = await getAccessToken()
+
+  fetch(`/BnOApi/getCart/${cartId}/${accessToken}`, {
     method: 'GET',
   })
   .then(x => x.json())
   .then(cart => {
-    console.log({cart})
+    if (!cart.lineItems) {
+      // enviar a carrito vacio
+      sessionStorage.removeItem('bnoItems')
 
-    if (!lineItems in cart) {
-      return alert('No line items in cart')
+      return window.location = 'checkout#/cart'
     }
 
     const { lineItems } = cart
+    if (!lineItems.length) {
+      sessionStorage.removeItem('bnoItems')
+      return window.location = 'checkout#/cart'
+    }
 
     //`/checkout/cart/add/?sku=1734013&qty=1&seller=1&sc=1&sku=1200465&qty=1&seller=1&sc=1`
     const newUrlCart = lineItems.reduce((acc, el) => {
@@ -106,7 +128,6 @@ const getCart = async () => {
     }, `/checkout/cart/add/?`)
 
 
-    console.log({newUrlCart})
 
     return {lineItems, newUrlCart, cartId}
   })
@@ -119,6 +140,8 @@ const getCart = async () => {
       BNOQuantity: item.availableQuantity,
     }))
 
+
+
     sessionStorage.setItem('bnoItems', JSON.stringify(bnoItems))
     window.location = newUrlCart
   })
@@ -130,19 +153,6 @@ const addBeoSupremeFont = () => {
   linkElement.setAttribute('type', 'text/css');
   linkElement.setAttribute('href', 'https://cloud.typography.com/6462894/6475632/css/fonts.css')
   document.head.appendChild(linkElement)
-}
-
-const awaitCondition = ({condition, cback}) => {
-  let count = 0;
-  const check = setInterval(() => {
-    if (condition) {
-      clearInterval(check)
-      return cback()
-    }
-    if (count === 30000) return clearInterval(check)
-
-    ++count
-  }, 100);
 }
 
 const handleInputFocus = (elements) => {
@@ -242,6 +252,59 @@ const changeElement = (elem, newText) => {
 window.onload = function(event) {
   console.log('onload::', {event});
   getCart()
+
+  $(window).on('orderFormUpdated.vtex', async function(_, orderForm) {
+    console.log({orderForm})
+
+    const { clientProfileData, shippingData: { selectedAddresses } } = orderForm
+
+    const [selectedAddress] = selectedAddresses
+
+    const accessToken = await getAccessToken()
+
+    const cartId = sessionStorage.getItem('cartId')
+
+    fetch(`/BnOApi/updateCart/${cartId}/${accessToken}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        version: 4,
+        actions: [
+          {
+            action: 'setShippingAddress',
+            address: {
+              firstName: clientProfileData?.firstName || null,
+              lastName: clientProfileData?.lastName || null,
+              address1: `${selectedAddress?.street || ''} ${selectedAddress?.number || ''}`,
+              address2: null,
+              city: selectedAddress?.city || null,
+              postalCode: selectedAddress?.postalCode || null,
+              country: "MX",
+              email: clientProfileData?.email || null,
+              phone: clientProfileData?.phone || null,
+            },
+          },
+          {
+            action: 'setBillingAddress',
+            address: {
+              firstName: clientProfileData?.firstName || null,
+              lastName: clientProfileData?.lastName || null,
+              address1: `${selectedAddress?.street || ''} ${selectedAddress?.number || ''}`,
+              address2: null,
+              city: selectedAddress?.city || null,
+              postalCode: selectedAddress?.postalCode || null,
+              country: "MX",
+              email: clientProfileData?.email || null,
+              phone: clientProfileData?.phone || null,
+            },
+          },
+        ],
+        monthlyNewsletterSubscription: false,
+      })
+    }).then(x => x.json())
+    .then(res => {
+      console.log('res::', res);
+    })
+  })
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -518,4 +581,8 @@ document.addEventListener('readystatechange', () => {
   }
 
 })
+
+
+
+
 
