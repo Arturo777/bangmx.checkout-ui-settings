@@ -2,9 +2,14 @@
 
 const getAccessToken = () => {
   return fetch('/BnOApi/getToken/', {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : '*',
+     },
   }).then(x => x.json()).then(x => {
-    accessToken = x.access_token
+    const accessToken = x.access_token
+    sessionStorage.setItem('accessToken', accessToken)
 
     return x.access_token
   })
@@ -20,10 +25,10 @@ const sendProductLogs = bodies => {
         })
       } catch (error) {
         console.log({
-          description: "Error al enviar logs",
-          skuId: body.VTEXSkuID,
-          error,
+          description: "Create logs error",
+          error: error.message,
         })
+
         throw new Error(error)
       }
     })
@@ -64,6 +69,8 @@ const compareProducts = async () => {
   })
 
   const vtexItems = await Promise.all(vtexItemsPromise)
+
+  if (!sessionStorage.getItem('bnoItems')) return
   const bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'))
 
   const combinedItems = vtexItems.map((item, i) => ({
@@ -77,16 +84,13 @@ const compareProducts = async () => {
     item.BNOQuantity !== item.VTEXQuantity
   })
 
-
   sendProductLogs(differentItems)
 }
 
 const getCart = async () => {
   const queryString = window.location.search
   const urlParams = new URLSearchParams(queryString)
-  const cartId = urlParams.get('cartId')
-
-
+  const cartId = urlParams.get('cartId')?.replace('/', '') || null
 
   if (!cartId) {
     if (sessionStorage.getItem('bnoItems')) {
@@ -127,23 +131,28 @@ const getCart = async () => {
       return acc.concat(`sku=${el.sku}&qty=${el.quantity}&seller=1&sc=1&`)
     }, `/checkout/cart/add/?`)
 
-
-
     return {lineItems, newUrlCart, cartId}
   })
   .then(({lineItems, newUrlCart, cartId}) => {
+    debugger
     const bnoItems = lineItems.map(item => ({
       CartId: cartId,
       BNOSkuID: item.sku,
       BNOSkuName: item.variant.key,
       BNOPrice: item.price.value.centAmount,
-      BNOQuantity: item.availableQuantity,
+      BNOQuantity: item.quantity,
     }))
-
-
 
     sessionStorage.setItem('bnoItems', JSON.stringify(bnoItems))
     window.location = newUrlCart
+  })
+  .catch(error => {
+    console.log({
+      description: "Get cart error",
+      error: error.message,
+    })
+
+    throw new Error(error)
   })
 }
 
@@ -250,17 +259,17 @@ const changeElement = (elem, newText) => {
 }
 
 window.onload = function(event) {
-  console.log('onload::', {event});
   getCart()
 
   $(window).on('orderFormUpdated.vtex', async function(_, orderForm) {
-    console.log({orderForm})
+
+    const accessToken = sessionStorage.getItem('accessToken')
+    if (!accessToken) return
 
     const { clientProfileData, shippingData: { selectedAddresses } } = orderForm
 
     const [selectedAddress] = selectedAddresses
 
-    const accessToken = await getAccessToken()
 
     const cartId = sessionStorage.getItem('cartId')
 
@@ -302,13 +311,20 @@ window.onload = function(event) {
       })
     }).then(x => x.json())
     .then(res => {
-      console.log('res::', res);
+      console.log('Update Cart Response::', res);
+    })
+    .catch(error => {
+      console.log({
+        description: "Update cart error",
+        error: error.message,
+      })
+
+      throw new Error(error)
     })
   })
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
-  console.log('DOMContentLoaded::', {event});
   addBeoSupremeFont()
 
   const compraSegura = createElem({
@@ -351,9 +367,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 })
 
 window.addEventListener('hashchange', function(event) {
-  console.log('hashchange::', {event});
-  console.log('hash::', location.hash);
-
   if (location.hash === '#/cart') {
     document.querySelector('div.headers.checkout').style.display = 'none'
   } else {
@@ -507,6 +520,11 @@ document.addEventListener('readystatechange', () => {
 
     if (location.hash === '#/cart') {
       document.querySelector('div.headers.checkout').style.display = 'none'
+
+      document.querySelectorAll(".product-name a").forEach((element) => {
+        element.setAttribute('href', 'javascript:void(0)')
+        element.style.cursor = 'default'
+      })
     } else {
       document.querySelector('div.headers.checkout').style.display = 'block'
       document.querySelector('table.table tfoot td.monetary').style.fontSize = '24px'
@@ -605,9 +623,6 @@ document.addEventListener('readystatechange', () => {
 
     createBackButton('#/email', '#shipping-data')
     createBackButton('#/shipping', '#payment-data')
-
-
-
   }
 
 })

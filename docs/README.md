@@ -64,6 +64,7 @@ https://checkout--bangmx.myvtex.com/checkout?cartId=SV6pBSvIY7pdHu2ze9FmSrmJlUXS
 
 ### 2 products: 
 https://checkout--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
+https://vic--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
 
 
 

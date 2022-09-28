@@ -29,11 +29,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // WARNING: THE USAGE OF CUSTOM SCRIPTS IS NOT SUPPORTED. VTEX IS NOT LIABLE FOR ANY DAMAGES THIS MAY CAUSE. THIS MAY BREAK YOUR STORE AND STOP SALES. IN CASE OF ERRORS, PLEASE DELETE THE CONTENT OF THIS SCRIPT.
 var getAccessToken = function getAccessToken() {
   return fetch('/BnOApi/getToken/', {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    }
   }).then(function (x) {
     return x.json();
   }).then(function (x) {
-    accessToken = x.access_token;
+    var accessToken = x.access_token;
+    sessionStorage.setItem('accessToken', accessToken);
     return x.access_token;
   });
 };
@@ -47,9 +52,8 @@ var sendProductLogs = function sendProductLogs(bodies) {
       });
     } catch (error) {
       console.log({
-        description: "Error al enviar logs",
-        skuId: body.VTEXSkuID,
-        error: error
+        description: "Create logs error",
+        error: error.message
       });
       throw new Error(error);
     }
@@ -99,6 +103,15 @@ var compareProducts = /*#__PURE__*/function () {
 
           case 4:
             vtexItems = _context.sent;
+
+            if (sessionStorage.getItem('bnoItems')) {
+              _context.next = 7;
+              break;
+            }
+
+            return _context.abrupt("return");
+
+          case 7:
             bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'));
             combinedItems = vtexItems.map(function (item, i) {
               return _objectSpread(_objectSpread(_objectSpread({}, bnoItems[i]), item), {}, {
@@ -110,7 +123,7 @@ var compareProducts = /*#__PURE__*/function () {
             });
             sendProductLogs(differentItems);
 
-          case 9:
+          case 11:
           case "end":
             return _context.stop();
         }
@@ -125,6 +138,8 @@ var compareProducts = /*#__PURE__*/function () {
 
 var getCart = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var _urlParams$get;
+
     var queryString, urlParams, cartId, accessToken;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
@@ -132,7 +147,7 @@ var getCart = /*#__PURE__*/function () {
           case 0:
             queryString = window.location.search;
             urlParams = new URLSearchParams(queryString);
-            cartId = urlParams.get('cartId');
+            cartId = ((_urlParams$get = urlParams.get('cartId')) === null || _urlParams$get === void 0 ? void 0 : _urlParams$get.replace('/', '')) || null;
 
             if (cartId) {
               _context2.next = 6;
@@ -186,17 +201,24 @@ var getCart = /*#__PURE__*/function () {
               var lineItems = _ref3.lineItems,
                   newUrlCart = _ref3.newUrlCart,
                   cartId = _ref3.cartId;
+              debugger;
               var bnoItems = lineItems.map(function (item) {
                 return {
                   CartId: cartId,
                   BNOSkuID: item.sku,
                   BNOSkuName: item.variant.key,
                   BNOPrice: item.price.value.centAmount,
-                  BNOQuantity: item.availableQuantity
+                  BNOQuantity: item.quantity
                 };
               });
               sessionStorage.setItem('bnoItems', JSON.stringify(bnoItems));
               window.location = newUrlCart;
+            })["catch"](function (error) {
+              console.log({
+                description: "Get cart error",
+                error: error.message
+              });
+              throw new Error(error);
             });
 
           case 12:
@@ -315,28 +337,27 @@ var changeElement = function changeElement(elem, newText) {
 };
 
 window.onload = function (event) {
-  console.log('onload::', {
-    event: event
-  });
   getCart();
   $(window).on('orderFormUpdated.vtex', /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(_, orderForm) {
-      var clientProfileData, selectedAddresses, _selectedAddresses, selectedAddress, accessToken, cartId;
+      var accessToken, clientProfileData, selectedAddresses, _selectedAddresses, selectedAddress, cartId;
 
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              console.log({
-                orderForm: orderForm
-              });
+              accessToken = sessionStorage.getItem('accessToken');
+
+              if (accessToken) {
+                _context3.next = 3;
+                break;
+              }
+
+              return _context3.abrupt("return");
+
+            case 3:
               clientProfileData = orderForm.clientProfileData, selectedAddresses = orderForm.shippingData.selectedAddresses;
               _selectedAddresses = _slicedToArray(selectedAddresses, 1), selectedAddress = _selectedAddresses[0];
-              _context3.next = 5;
-              return getAccessToken();
-
-            case 5:
-              accessToken = _context3.sent;
               cartId = sessionStorage.getItem('cartId');
               fetch("/BnOApi/updateCart/".concat(cartId, "/").concat(accessToken), {
                 method: 'POST',
@@ -374,10 +395,16 @@ window.onload = function (event) {
               }).then(function (x) {
                 return x.json();
               }).then(function (res) {
-                console.log('res::', res);
+                console.log('Update Cart Response::', res);
+              })["catch"](function (error) {
+                console.log({
+                  description: "Update cart error",
+                  error: error.message
+                });
+                throw new Error(error);
               });
 
-            case 8:
+            case 7:
             case "end":
               return _context3.stop();
           }
@@ -392,9 +419,6 @@ window.onload = function (event) {
 };
 
 document.addEventListener('DOMContentLoaded', function (event) {
-  console.log('DOMContentLoaded::', {
-    event: event
-  });
   addBeoSupremeFont();
   var compraSegura = createElem({
     elem: 'h1',
@@ -420,11 +444,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
   });
 });
 window.addEventListener('hashchange', function (event) {
-  console.log('hashchange::', {
-    event: event
-  });
-  console.log('hash::', location.hash);
-
   if (location.hash === '#/cart') {
     document.querySelector('div.headers.checkout').style.display = 'none';
   } else {
@@ -532,6 +551,10 @@ document.addEventListener('readystatechange', function () {
   if (document.readyState === "complete") {
     if (location.hash === '#/cart') {
       document.querySelector('div.headers.checkout').style.display = 'none';
+      document.querySelectorAll(".product-name a").forEach(function (element) {
+        element.setAttribute('href', 'javascript:void(0)');
+        element.style.cursor = 'default';
+      });
     } else {
       document.querySelector('div.headers.checkout').style.display = 'block';
       document.querySelector('table.table tfoot td.monetary').style.fontSize = '24px';
