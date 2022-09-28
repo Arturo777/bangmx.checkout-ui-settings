@@ -394,6 +394,22 @@ window.addEventListener('hashchange', function(event) {
         target: document.querySelector("#shipping-data div.accordion-inner.shipping-container"),
       })
     }
+    const progressBar = (width) => {
+      const bar = document.createElement('div')
+      bar.classList.add('progress-bar')
+      bar.style.width = width
+      bar.style.height = '5px'
+      bar.style.background = 'rgb(255, 195, 86)'
+      bar.style.marginLeft = '-30px'
+      return bar
+    }
+
+    const shippingData = document.querySelector('#shipping-data')
+
+    if (!document.querySelector('#shipping-data .progress-bar')) {
+      shippingData.prepend(progressBar('66.6%'))
+    }
+    
   }
 
   if (location.hash === '#/payment') {
@@ -405,6 +421,7 @@ window.addEventListener('hashchange', function(event) {
     paymentTitle.innerHTML = 'Selecciona el método de pago'
 
     if (!document.querySelector('.form-title.title-payment')) {
+
       createContainer({
         elem: 'div',
         classNames: [
@@ -559,6 +576,19 @@ document.addEventListener('readystatechange', () => {
       const button = event.target
       button.style.borderColor = 'rgb(235, 232, 229)';
     })
+
+    const progressBar = (width) => {
+      const bar = document.createElement('div')
+      bar.classList.add('progress-bar')
+      bar.style.width = width
+      bar.style.height = '5px'
+      bar.style.background = 'rgb(255, 195, 86)'
+      return bar
+    }
+
+    const clientData = document.querySelector('#client-profile-data')
+
+    clientData.prepend(progressBar('33.3%'))
 
     changeElement('#go-to-shipping', 'Siguiente')
     changeElement('.custom-cart-template-wrap > h2', 'DETALLES DEL PEDIDO')
