@@ -453,6 +453,22 @@ window.addEventListener('hashchange', function (event) {
         target: document.querySelector("#shipping-data div.accordion-inner.shipping-container")
       });
     }
+
+    var progressBar = function progressBar(width) {
+      var bar = document.createElement('div');
+      bar.classList.add('progress-bar');
+      bar.style.width = width;
+      bar.style.height = '5px';
+      bar.style.background = 'rgb(255, 195, 86)';
+      bar.style.marginLeft = '-30px';
+      return bar;
+    };
+
+    var shippingData = document.querySelector('#shipping-data');
+
+    if (!document.querySelector('#shipping-data .progress-bar')) {
+      shippingData.prepend(progressBar('66.6%'));
+    }
   }
 
   if (location.hash === '#/payment') {
@@ -573,6 +589,18 @@ document.addEventListener('readystatechange', function () {
       var button = event.target;
       button.style.borderColor = 'rgb(235, 232, 229)';
     });
+
+    var progressBar = function progressBar(width) {
+      var bar = document.createElement('div');
+      bar.classList.add('progress-bar');
+      bar.style.width = width;
+      bar.style.height = '5px';
+      bar.style.background = 'rgb(255, 195, 86)';
+      return bar;
+    };
+
+    var clientData = document.querySelector('#client-profile-data');
+    clientData.prepend(progressBar('33.3%'));
     changeElement('#go-to-shipping', 'Siguiente');
     changeElement('.custom-cart-template-wrap > h2', 'DETALLES DEL PEDIDO');
     changeElement('.orderform-template .cart-template.mini-cart .summary-totalizers tfoot tr td.info', 'Total del pedido');

@@ -284,6 +284,38 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
   margin-bottom: 20px;
 }
 
+.progress-bar-client-profile-data {
+  height: 2px;
+  /* margin: 0 16px; */
+  background: rgb(255, 195, 86);
+  width: 33.3%;
+}
+
+.progress-bar-shipping-data {
+  height: 2px;
+  /* margin: 0 16px; */
+  background: rgb(255, 195, 86);
+  width: 66.6%;
+}
+
+.progress-bar-payment-data {
+  height: 2px;
+  /* margin: 0 16px; */
+  background: rgb(255, 195, 86);
+  width: 100%;
+}
+
+#payment-data {
+  /* margin: 0 16px; */
+  border-top: solid rgb(255, 195, 86) 5px !important;
+}
+
+#shipping-data .progress-bar {
+  position: absolute;
+  top: 0;
+}
+
+
 .accordion-toggle>span {
   color: #fff;
 }
@@ -808,4 +840,54 @@ input[type='radio']:checked {
   display: block;
   position: absolute;
   left: calc(50% - 577px);
+}
+
+@media only screen and (max-width: 768px){
+  .custom-cart-template-wrap {
+    margin-top: 90px;
+  }
+
+  .summary-template-holder {
+    width: 150% !important;
+  }
+}
+
+@media only screen and (max-width: 690px){
+  .table.cart-items td.product-name, .table.cart-items td.quantity {
+    margin-left: 145px !important;
+  }
+
+  .product-item {
+    width: 113% !important;
+  }
+}
+
+@media only screen and (max-width: 618px){
+  .full-cart .cart table tbody tr td.quantity {
+    margin-left: 19px !important;
+  }
+}
+
+@media only screen and (max-width: 540px){
+  .product-item {
+    width: 140% !important;
+  }
+}
+
+@media only screen and (max-width: 424px){
+  .title-cart-products {
+    margin-left: 2rem;
+  }
+}
+
+@media only screen and (max-width: 413px){
+  .btn-success, .button.checkEmailAuthConflict__modal--button, .button.back-button {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 376px){
+  .new-product-price {
+    margin-left: 4rem !important;
+  }
 }
