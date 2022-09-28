@@ -333,7 +333,7 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
 }
 
 .newsletter {
-  display: none;
+  display: block;
 }
 
 .vtex-omnishipping-1-x-addressFormPart1 small {
@@ -890,4 +890,12 @@ input[type='radio']:checked {
   .new-product-price {
     margin-left: 4rem !important;
   }
+}
+
+.srp-icon-radio-selected path {
+  fill: black !important;
+}
+
+.radio input[type="radio"], .checkbox input[type="checkbox"], #address-toggle-0 {
+  accent-color: black !important;    
 }
