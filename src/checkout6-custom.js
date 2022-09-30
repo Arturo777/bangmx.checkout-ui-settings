@@ -134,7 +134,6 @@ const getCart = async () => {
     return {lineItems, newUrlCart, cartId}
   })
   .then(({lineItems, newUrlCart, cartId}) => {
-    debugger
     const bnoItems = lineItems.map(item => ({
       CartId: cartId,
       BNOSkuID: item.sku,
@@ -228,10 +227,10 @@ const createContainer = (
   return element
 }
 
-const createBackButton = (hash, parent) => {
+const createBackButton = (id, parent) => {
   const backButton = document.createElement('button')
   backButton.innerHTML = 'Atrás'
-  backButton.classList.add('back-button')
+  backButton.classList.add(`back-button`)
 
   createContainer({
     elem: 'div',
@@ -241,7 +240,8 @@ const createBackButton = (hash, parent) => {
   })
 
   backButton.addEventListener('click', () => {
-    window.location.hash = hash
+    // window.location.hash = hash
+    document.querySelector(`#${id}`).click()
   })
 
   return backButton
@@ -373,7 +373,7 @@ window.addEventListener('hashchange', function(event) {
     document.querySelector('div.headers.checkout').style.display = 'block'
   }
 
-  if (location.hash === '#/email') {
+  if (location.hash === '#/email' || location.hash === '#/profile') {
     document.querySelector('#client-profile-data').style.display = 'block'
     document.querySelector('#shipping-data').style.display = 'none'
     document.querySelector('#payment-data').style.display = 'none'
@@ -422,7 +422,7 @@ window.addEventListener('hashchange', function(event) {
     if (!document.querySelector('#shipping-data .progress-bar')) {
       shippingData.prepend(progressBar('66.6%'))
     }
-    
+
   }
 
   if (location.hash === '#/payment') {
@@ -448,7 +448,7 @@ window.addEventListener('hashchange', function(event) {
       })
     }
 
-    createBackButton('#/shipping', '#payment-data')
+    createBackButton('edit-shipping-data', '#payment-data')
   }
 })
 
@@ -621,8 +621,8 @@ document.addEventListener('readystatechange', () => {
       'client-phone',
     ])
 
-    createBackButton('#/email', '#shipping-data')
-    createBackButton('#/shipping', '#payment-data')
+    createBackButton('edit-profile-data', '#shipping-data')
+    createBackButton('edit-shipping-data', '#payment-data')
   }
 
 })

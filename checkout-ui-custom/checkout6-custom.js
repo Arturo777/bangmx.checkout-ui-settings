@@ -201,7 +201,6 @@ var getCart = /*#__PURE__*/function () {
               var lineItems = _ref3.lineItems,
                   newUrlCart = _ref3.newUrlCart,
                   cartId = _ref3.cartId;
-              debugger;
               var bnoItems = lineItems.map(function (item) {
                 return {
                   CartId: cartId,
@@ -308,10 +307,10 @@ var createContainer = function createContainer(_ref4) {
   return element;
 };
 
-var createBackButton = function createBackButton(hash, parent) {
+var createBackButton = function createBackButton(id, parent) {
   var backButton = document.createElement('button');
   backButton.innerHTML = 'Atrás';
-  backButton.classList.add('back-button');
+  backButton.classList.add("back-button");
   createContainer({
     elem: 'div',
     classNames: ["btns-container"],
@@ -319,7 +318,8 @@ var createBackButton = function createBackButton(hash, parent) {
     targetAppend: document.querySelector(parent)
   });
   backButton.addEventListener('click', function () {
-    window.location.hash = hash;
+    // window.location.hash = hash
+    document.querySelector("#".concat(id)).click();
   });
   return backButton;
 };
@@ -450,7 +450,7 @@ window.addEventListener('hashchange', function (event) {
     document.querySelector('div.headers.checkout').style.display = 'block';
   }
 
-  if (location.hash === '#/email') {
+  if (location.hash === '#/email' || location.hash === '#/profile') {
     document.querySelector('#client-profile-data').style.display = 'block';
     document.querySelector('#shipping-data').style.display = 'none';
     document.querySelector('#payment-data').style.display = 'none';
@@ -506,7 +506,7 @@ window.addEventListener('hashchange', function (event) {
       });
     }
 
-    createBackButton('#/shipping', '#payment-data');
+    createBackButton('edit-shipping-data', '#payment-data');
   }
 });
 document.addEventListener('readystatechange', function () {
@@ -630,7 +630,7 @@ document.addEventListener('readystatechange', function () {
     changeElement('.full-cart .totalizers tfoot td', 'Total del pedido');
     changeElement('.summary-template-holder .cart-links-bottom .btn-success', 'Compra segura');
     handleInputFocus(['client-email', 'client-first-name', 'client-last-name', 'client-phone']);
-    createBackButton('#/email', '#shipping-data');
-    createBackButton('#/shipping', '#payment-data');
+    createBackButton('edit-profile-data', '#shipping-data');
+    createBackButton('edit-shipping-data', '#payment-data');
   }
 });

@@ -336,6 +336,7 @@ body.js-vcustom-hideEmailStep .payment-data .accordion-toggle>span:not(.payment-
   display: block;
 }
 
+/* xxx */
 .vtex-omnishipping-1-x-addressFormPart1 small {
   display: none;
 }
@@ -627,9 +628,6 @@ input.success:not([invalid="true"]) {
   display: none;
 }
 
-.orderform-template-holder #client-profile-data .step.client-profile-data .link-box-edit {
-  display: none;
-}
 
 .btn-go-to-payment-wrapper {
   display: flex;
@@ -897,5 +895,19 @@ input[type='radio']:checked {
 }
 
 .radio input[type="radio"], .checkbox input[type="checkbox"], #address-toggle-0 {
-  accent-color: black !important;    
+  accent-color: black !important;
+}
+
+#shipping-preview-container {
+  display: none;
+}
+
+.ChangeNumberOfPayments.clearfix a {
+  color: black;
+  text-decoration: underline;
+}
+
+.vtex-omnishipping-1-x-svg path {
+  fill: black !important;
+
 }
