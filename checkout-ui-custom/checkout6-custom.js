@@ -6,10 +6,6 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
@@ -21,6 +17,18 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -40,6 +48,12 @@ var getAccessToken = function getAccessToken() {
     var accessToken = x.access_token;
     sessionStorage.setItem('accessToken', accessToken);
     return x.access_token;
+  })["catch"](function (error) {
+    console.log({
+      description: "Get access token error",
+      error: error.message
+    });
+    throw new Error(error);
   });
 };
 
@@ -69,7 +83,7 @@ var getVtexSkuByProductId = function getVtexSkuByProductId(productId, skuId) {
   return fetch("/vtex/catalog/".concat(productId)).then(function (x) {
     return x.json();
   }).then(function (res) {
-    if (!res.skus.length) alert("No skus by productId: ".concat(productId));
+    if (!res || !res.skus || !res.skus.length) return alert("No skus by productId: ".concat(productId));
     var selectedSku = res.skus.find(function (sku) {
       return skuId == sku.sku;
     });
@@ -79,39 +93,76 @@ var getVtexSkuByProductId = function getVtexSkuByProductId(productId, skuId) {
       VTEXPrice: selectedSku.bestPrice,
       VTEXQuantity: selectedSku.availablequantity
     };
+  })["catch"](function (error) {
+    console.log({
+      description: "Get productId: ".concat(productId, " error"),
+      error: error.message
+    });
+    throw new Error(error);
   });
 };
 
 var compareProducts = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var vtexProducts, vtexItemsPromise, vtexItems, bnoItems, combinedItems, differentItems;
+    var vtexProducts, _yield$vtexjs$checkou, items, vtexItemsPromise, vtexItems, bnoItems, combinedItems, differentItems;
+
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            vtexProducts = vtexjs.checkout.orderForm.items.map(function (item) {
+            vtexProducts = [];
+            _context.prev = 1;
+            _context.next = 4;
+            return vtexjs.checkout.getOrderForm();
+
+          case 4:
+            _yield$vtexjs$checkou = _context.sent;
+            items = _yield$vtexjs$checkou.items;
+            vtexProducts.push.apply(vtexProducts, _toConsumableArray(items.map(function (item) {
               return {
                 productId: item.productId,
                 skuId: item.id
               };
-            });
-            vtexItemsPromise = vtexProducts.map(function (vtexProduct) {
-              return getVtexSkuByProductId(vtexProduct.productId, vtexProduct.skuId);
-            });
-            _context.next = 4;
-            return Promise.all(vtexItemsPromise);
+            })));
+            _context.next = 13;
+            break;
 
-          case 4:
-            vtexItems = _context.sent;
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](1);
+            console.log({
+              description: "Get orderForm error",
+              error: _context.t0.message
+            });
+            throw new Error(_context.t0);
 
-            if (sessionStorage.getItem('bnoItems')) {
-              _context.next = 7;
+          case 13:
+            if (vtexProducts.length) {
+              _context.next = 15;
               break;
             }
 
             return _context.abrupt("return");
 
-          case 7:
+          case 15:
+            console.log('vtexProducts::', vtexProducts);
+            vtexItemsPromise = vtexProducts.map(function (vtexProduct) {
+              return getVtexSkuByProductId(vtexProduct.productId, vtexProduct.skuId);
+            });
+            _context.next = 19;
+            return Promise.all(vtexItemsPromise);
+
+          case 19:
+            vtexItems = _context.sent;
+
+            if (sessionStorage.getItem('bnoItems')) {
+              _context.next = 22;
+              break;
+            }
+
+            return _context.abrupt("return");
+
+          case 22:
             bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'));
             combinedItems = vtexItems.map(function (item, i) {
               return _objectSpread(_objectSpread(_objectSpread({}, bnoItems[i]), item), {}, {
@@ -123,12 +174,12 @@ var compareProducts = /*#__PURE__*/function () {
             });
             sendProductLogs(differentItems);
 
-          case 11:
+          case 26:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee);
+    }, _callee, null, [[1, 9]]);
   }));
 
   return function compareProducts() {
@@ -338,7 +389,7 @@ var changeElement = function changeElement(elem, newText) {
   }
 };
 
-window.onload = function (event) {
+window.onload = function () {
   getCart();
   $(window).on('orderFormUpdated.vtex', /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(_, orderForm) {
@@ -457,6 +508,7 @@ window.addEventListener('hashchange', function (event) {
     document.querySelector('#shipping-data').style.display = 'none';
     document.querySelector('#payment-data').style.display = 'none';
     changeElement('#go-to-shipping', 'Siguiente');
+    changeElement('#btn-go-to-shipping', 'Siguiente');
     changeElement('#btn-go-to-payment', 'Siguiente');
     changeElement('#go-to-payment', 'Siguiente');
     handleLabels(['client-email', 'client-first-name', 'client-last-name', 'client-phone']);

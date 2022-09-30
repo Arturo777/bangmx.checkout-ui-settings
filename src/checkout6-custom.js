@@ -12,6 +12,13 @@ const getAccessToken = () => {
     sessionStorage.setItem('accessToken', accessToken)
 
     return x.access_token
+  }).catch((error) => {
+    console.log({
+      description: `Get access token error`,
+      error: error.message,
+    })
+
+    throw new Error(error)
   })
 }
 
@@ -43,7 +50,7 @@ const getVtexSkuByProductId = (productId, skuId)  => {
   return fetch(`/vtex/catalog/${productId}`).then(x => x.json())
   .then(res => {
 
-    if (!res.skus.length) alert(`No skus by productId: ${productId}`)
+    if (!res || !res.skus || !res.skus.length) return alert(`No skus by productId: ${productId}`)
 
     const selectedSku = res.skus
       .find(sku => skuId == sku.sku)
@@ -55,15 +62,41 @@ const getVtexSkuByProductId = (productId, skuId)  => {
       VTEXQuantity: selectedSku.availablequantity
     }
   })
+  .catch(error => {
+    console.log({
+      description: `Get productId: ${productId} error`,
+      error: error.message,
+    })
+
+    throw new Error(error)
+  })
 }
 
 const compareProducts = async () => {
 
-  const vtexProducts = vtexjs.checkout.orderForm.items.map(item => ({
-    productId: item.productId,
-    skuId: item.id
-  }))
 
+  const vtexProducts = []
+
+  try {
+    const { items } = await vtexjs.checkout.getOrderForm()
+
+
+    vtexProducts.push(...items.map(item => ({
+      productId: item.productId,
+      skuId: item.id
+    })))
+  } catch (error) {
+    console.log({
+      description: "Get orderForm error",
+      error: error.message,
+    })
+
+    throw new Error(error)
+  }
+
+  if (!vtexProducts.length) return
+
+  console.log('vtexProducts::', vtexProducts);
   const vtexItemsPromise = vtexProducts.map(vtexProduct => {
     return getVtexSkuByProductId(vtexProduct.productId, vtexProduct.skuId)
   })
@@ -260,7 +293,7 @@ const changeElement = (elem, newText) => {
   }
 }
 
-window.onload = function(event) {
+window.onload = function() {
   getCart()
 
   $(window).on('orderFormUpdated.vtex', async function(_, orderForm) {
