@@ -255,7 +255,9 @@ const createElem = ({ elem, innerText }) => {
 }
 
 const changeElement = (elem, newText) => {
-  document.querySelector(elem).innerHTML = newText;
+  if (document.querySelector(elem)) {
+    document.querySelector(elem).innerHTML = newText;
+  }
 }
 
 window.onload = function(event) {
@@ -377,6 +379,10 @@ window.addEventListener('hashchange', function(event) {
     document.querySelector('#client-profile-data').style.display = 'block'
     document.querySelector('#shipping-data').style.display = 'none'
     document.querySelector('#payment-data').style.display = 'none'
+    changeElement('#go-to-shipping', 'Siguiente')
+    changeElement('#btn-go-to-shipping', 'Siguiente')
+    changeElement('#btn-go-to-payment', 'Siguiente')
+    changeElement('#go-to-payment', 'Siguiente')
 
     handleLabels([
       'client-email',
@@ -390,6 +396,8 @@ window.addEventListener('hashchange', function(event) {
     document.querySelector('#client-profile-data').style.display = 'none'
     document.querySelector('#shipping-data').style.display = 'flex'
     document.querySelector('#payment-data').style.display = 'none'
+    changeElement('#go-to-shipping', 'Siguiente')
+    changeElement('#btn-go-to-payment', 'Siguiente')
 
     const shippingTitle = document.createElement('p')
     shippingTitle.innerHTML = 'Introduce la dirección de entrega'
@@ -609,6 +617,7 @@ document.addEventListener('readystatechange', () => {
     clientData.prepend(progressBar('33.3%'))
 
     changeElement('#go-to-shipping', 'Siguiente')
+    changeElement('#btn-go-to-payment', 'Siguiente')
     changeElement('.custom-cart-template-wrap > h2', 'DETALLES DEL PEDIDO')
     changeElement('.orderform-template .cart-template.mini-cart .summary-totalizers tfoot tr td.info', 'Total del pedido')
     changeElement('.full-cart .totalizers tfoot td', 'Total del pedido')
