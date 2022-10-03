@@ -609,8 +609,12 @@ document.addEventListener('readystatechange', function () {
 
   if (document.readyState === "complete") {
     if (location.hash === '#/cart') {
+      if (document.querySelector('#cart-choose-products')) {
+        document.querySelector('#cart-choose-products').setAttribute('href', 'https://www.bang-olufsen.com/es/mx');
+      }
+
       document.querySelector('div.headers.checkout').style.display = 'none';
-      document.querySelectorAll(".product-name a").forEach(function (element) {
+      document.querySelectorAll(".product-item a").forEach(function (element) {
         element.setAttribute('href', 'javascript:void(0)');
         element.style.cursor = 'default';
       });

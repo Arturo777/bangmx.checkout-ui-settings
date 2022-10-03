@@ -196,7 +196,7 @@ const addBeoSupremeFont = () => {
   document.head.appendChild(linkElement)
 }
 
-const handleInputFocus = (elements) => {
+const handleInputFocus = elements => {
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i]
 
@@ -218,7 +218,7 @@ const handleInputFocus = (elements) => {
   }
 }
 
-const handleLabels = (elements) => {
+const handleLabels = elements => {
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i]
     const target = document.querySelector(`p.${element} label`)
@@ -560,12 +560,18 @@ document.addEventListener('readystatechange', () => {
   if (document.readyState === "complete") {
 
     if (location.hash === '#/cart') {
+      if (document.querySelector('#cart-choose-products')) {
+        document.querySelector('#cart-choose-products').setAttribute('href', 'https://www.bang-olufsen.com/es/mx')
+      }
+
       document.querySelector('div.headers.checkout').style.display = 'none'
 
-      document.querySelectorAll(".product-name a").forEach((element) => {
+      document.querySelectorAll(".product-item a").forEach((element) => {
         element.setAttribute('href', 'javascript:void(0)')
         element.style.cursor = 'default'
       })
+
+
     } else {
       document.querySelector('div.headers.checkout').style.display = 'block'
       document.querySelector('table.table tfoot td.monetary').style.fontSize = '24px'
