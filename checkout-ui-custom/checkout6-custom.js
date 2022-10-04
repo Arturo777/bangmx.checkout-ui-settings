@@ -268,7 +268,7 @@ var getCart = /*#__PURE__*/function () {
                 description: "Get cart error",
                 error: error.message
               });
-              throw new Error(error);
+              window.location = 'https://www.bang-olufsen.com/es/mx/cart';
             });
 
           case 12:
@@ -288,7 +288,8 @@ var addBeoSupremeFont = function addBeoSupremeFont() {
   var linkElement = document.createElement('link');
   linkElement.setAttribute('rel', 'stylesheet');
   linkElement.setAttribute('type', 'text/css');
-  linkElement.setAttribute('href', 'https://cloud.typography.com/6462894/6475632/css/fonts.css');
+  linkElement.setAttribute('href', 'https://cloud.typography.com/6462894/7475632/css/fonts.css');
+  linkElement.setAttribute('media', 'all');
   document.head.appendChild(linkElement);
 };
 
@@ -369,7 +370,6 @@ var createBackButton = function createBackButton(id, parent) {
     targetAppend: document.querySelector(parent)
   });
   backButton.addEventListener('click', function () {
-    // window.location.hash = hash
     document.querySelector("#".concat(id)).click();
   });
   return backButton;
@@ -471,7 +471,7 @@ window.onload = function () {
   }());
 };
 
-document.addEventListener('DOMContentLoaded', function (event) {
+document.addEventListener('DOMContentLoaded', function () {
   addBeoSupremeFont();
   var compraSegura = createElem({
     elem: 'h1',
@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     target: document.querySelector('.checkout-container')
   });
 });
-window.addEventListener('hashchange', function (event) {
+window.addEventListener('hashchange', function () {
   if (location.hash === '#/cart') {
     document.querySelector('div.headers.checkout').style.display = 'none';
   } else {

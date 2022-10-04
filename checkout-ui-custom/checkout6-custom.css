@@ -1,6 +1,9 @@
+@import url('/arquivos/beosupreme.css');
+
 body#checkoutMainContainer {
   background-color: #fff;
   font-family: 'BeoSupreme', 'Lexend Deca', sans-serif;
+  font-weight: 300;
 }
 
 /* Displays the option to enter a foreign document */

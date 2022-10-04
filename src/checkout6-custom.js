@@ -129,7 +129,8 @@ const getCart = async () => {
     if (sessionStorage.getItem('bnoItems')) {
       compareProducts()
     } else {
-      vtexjs.checkout.removeAllItems()
+      console.log('No removed items for payments testing')
+      // vtexjs.checkout.removeAllItems()
     }
 
     return removeLoadingSpinner()
@@ -184,7 +185,7 @@ const getCart = async () => {
       error: error.message,
     })
 
-    throw new Error(error)
+    window.location = 'https://www.bang-olufsen.com/es/mx/cart'
   })
 }
 
@@ -192,8 +193,11 @@ const addBeoSupremeFont = () => {
   const linkElement = document.createElement('link')
   linkElement.setAttribute('rel', 'stylesheet');
   linkElement.setAttribute('type', 'text/css');
-  linkElement.setAttribute('href', 'https://cloud.typography.com/6462894/6475632/css/fonts.css')
+  linkElement.setAttribute('href', 'https://cloud.typography.com/6462894/7475632/css/fonts.css')
+  linkElement.setAttribute('media', 'all')
+
   document.head.appendChild(linkElement)
+
 }
 
 const handleInputFocus = elements => {
@@ -273,7 +277,6 @@ const createBackButton = (id, parent) => {
   })
 
   backButton.addEventListener('click', () => {
-    // window.location.hash = hash
     document.querySelector(`#${id}`).click()
   })
 
@@ -359,8 +362,8 @@ window.onload = function() {
   })
 }
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  addBeoSupremeFont()
+document.addEventListener('DOMContentLoaded', function() {
+
 
   const compraSegura = createElem({
     elem: 'h1',
@@ -401,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   })
 })
 
-window.addEventListener('hashchange', function(event) {
+window.addEventListener('hashchange', function() {
   if (location.hash === '#/cart') {
     document.querySelector('div.headers.checkout').style.display = 'none'
   } else {
@@ -558,6 +561,7 @@ document.addEventListener('readystatechange', () => {
   }
 
   if (document.readyState === "complete") {
+    addBeoSupremeFont()
 
     if (location.hash === '#/cart') {
       if (document.querySelector('#cart-choose-products')) {
