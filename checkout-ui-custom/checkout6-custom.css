@@ -1,9 +1,11 @@
-@import url('/arquivos/beosupreme.css');
+@import url('https://bangmx.vteximg.com.br/arquivos/beosupreme.css');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@200&family=Permanent+Marker&display=swap');
 
 body#checkoutMainContainer {
   background-color: #fff;
-  font-family: 'BeoSupreme', 'Lexend Deca', sans-serif;
-  font-weight: 300;
+  /* font-family: 'BeoSupreme', 'Lexend Deca', sans-serif;
+  font-weight: 300; */
+  font-family: 'Lexend Deca', sans-serif;
 }
 
 /* Displays the option to enter a foreign document */

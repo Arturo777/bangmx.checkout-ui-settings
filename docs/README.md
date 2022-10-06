@@ -62,18 +62,29 @@ https://checkout--bangmx.myvtex.com/checkout?cartId=vbmnQ4ILiGuaVjRlvGOdMxs0n9RT
 ```
 https://checkout--bangmx.myvtex.com/checkout?cartId=SV6pBSvIY7pdHu2ze9FmSrmJlUXSUyel17xMKAGEdUQhreQYg3NHvb3dshOCWn9v/#/cart
 
-### 2 products:
-https://checkout--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
-https://payments--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
-https://vic--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
+### item 1108771 not available:
+https://checkout--bangmx.myvtex.com/checkout?cartId=H6lIbf1bPj2fACO2aRZSeRGul7u4A_3JRsB-7BHfmdboRq2zviSMDcP-HXqkvKBo/#/cart
 
-### 2 products:
+### item 1666518 not available:
+https://checkout--bangmx.myvtex.com/checkout?cartId=GtJVwv9le3qXgub3uXxoz3SVZ06L2AqJ5etkS0BWrOXQK8seFgZFjN3KXa1O64kA/#/cart
+
+### Empty cart:
+https://checkout--bangmx.myvtex.com/checkout?cartId=71B_4UveB92ctpGCLRbBVvbUn0AkkoYCkrNcAz3DjLL1lLVDGiEEfX7nqXVBH-L1/#/cart
+
+### Error:
+```
+"error": {
+        "code": "APICD001",
+        "text": "Get cart failed",
+        "statusCode": 200,
+        "switchToCountry": null,
+        "type": "getCartFailed"
+    }
+```
 https://checkout--bangmx.myvtex.com/checkout?cartId=WNdNLkb1f5hvJ_dwjz5OGmP5T9EXf3DVEbQ6TRLpXV-JqDFYH9SkXuMtYk1iQgjn/#/cart
-https://payments--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
-https://vic--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
 
+### Empty cart:
+https://checkout--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h7XFQ3Mj9FEhpe7ItGefT-M6HPyR2-L2deKri/#/cart
 
-
-
-
-
+### 2 products:
+https://checkout--bangmx.myvtex.com/checkout?cartId=32TVbysyEXydCivABTpjytnhnSN1svgsszuC81nFJglPB786N6U3jdmLilfGl8YS/#/cart
