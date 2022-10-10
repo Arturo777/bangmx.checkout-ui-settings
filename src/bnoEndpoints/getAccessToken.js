@@ -16,7 +16,7 @@ const getAccessToken = () => {
       error: error.message,
     })
 
-    throw new Error(error)
+    window.location = 'https://www.bang-olufsen.com/es/mx/cart'
   })
 }
 

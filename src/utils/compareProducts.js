@@ -27,6 +27,8 @@ module.exports = async () => {
 
   const vtexItems = await Promise.all(vtexItemsPromise)
 
+  console.log({vtexItems});
+
   if (!sessionStorage.getItem('bnoItems')) return
   const bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'))
 

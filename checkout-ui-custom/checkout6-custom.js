@@ -25,7 +25,7 @@ var getAccessToken = function getAccessToken() {
       description: "Get access token error",
       error: error.message
     });
-    throw new Error(error);
+    window.location = 'https://www.bang-olufsen.com/es/mx/cart';
   });
 };
 
@@ -86,8 +86,11 @@ module.exports = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntim
 
         case 10:
           accessToken = _context.sent;
-          fetch("/BnOApi/getCart/".concat(cartId, "/").concat(accessToken), {
-            method: 'GET'
+          fetch("/BnOApi/getCart/".concat(cartId), {
+            method: 'GET',
+            headers: {
+              'X-B&O-API-AccessToken': accessToken
+            }
           }).then(function (x) {
             return x.json();
           }).then(function (cart) {
@@ -121,7 +124,7 @@ module.exports = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntim
                 CartId: cartId,
                 BNOSkuID: item.sku,
                 BNOSkuName: item.variant.key,
-                BNOPrice: item.price.value.centAmount,
+                BNOPrice: item.price.value.centAmount || item.variant.prices[0].value.centAmount,
                 BNOQuantity: item.quantity
               };
             });
@@ -256,15 +259,18 @@ module.exports = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntim
 
         case 18:
           vtexItems = _context.sent;
+          console.log({
+            vtexItems: vtexItems
+          });
 
           if (sessionStorage.getItem('bnoItems')) {
-            _context.next = 21;
+            _context.next = 22;
             break;
           }
 
           return _context.abrupt("return");
 
-        case 21:
+        case 22:
           bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'));
           combinedItems = vtexItems.map(function (item, i) {
             return _objectSpread(_objectSpread(_objectSpread({}, bnoItems[i]), item), {}, {
@@ -276,7 +282,7 @@ module.exports = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntim
           });
           sendProductLogs(differentItems);
 
-        case 25:
+        case 26:
         case "end":
           return _context.stop();
       }
@@ -306,19 +312,8 @@ module.exports = function () {
 /***/ ((module) => {
 
 module.exports = function (productId, skuId) {
-  return fetch("/vtex/catalog/".concat(productId)).then(function (x) {
+  return fetch("/vtex/catalog/skus/".concat(skuId, "/").concat(productId)).then(function (x) {
     return x.json();
-  }).then(function (res) {
-    if (!res || !res.skus || !res.skus.length) return alert("No skus by productId: ".concat(productId));
-    var selectedSku = res.skus.find(function (sku) {
-      return skuId == sku.sku;
-    });
-    return {
-      VTEXSkuID: String(selectedSku.sku),
-      VTEXSkuName: selectedSku.skuname,
-      VTEXPrice: selectedSku.bestPrice,
-      VTEXQuantity: selectedSku.availablequantity
-    };
   })["catch"](function (error) {
     console.log({
       description: "Get productId: ".concat(productId, " error"),
@@ -513,8 +508,11 @@ window.onload = function () {
               clientProfileData = orderForm.clientProfileData, selectedAddresses = orderForm.shippingData.selectedAddresses;
               _selectedAddresses = _slicedToArray(selectedAddresses, 1), selectedAddress = _selectedAddresses[0];
               cartId = sessionStorage.getItem('cartId');
-              fetch("/BnOApi/updateCart/".concat(cartId, "/").concat(accessToken), {
+              fetch("/BnOApi/updateCart/".concat(cartId), {
                 method: 'POST',
+                headers: {
+                  'X-B&O-API-AccessToken': accessToken
+                },
                 body: JSON.stringify({
                   version: 4,
                   actions: [{

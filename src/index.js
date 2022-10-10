@@ -122,8 +122,11 @@ window.onload = function() {
 
     const cartId = sessionStorage.getItem('cartId')
 
-    fetch(`/BnOApi/updateCart/${cartId}/${accessToken}`, {
+    fetch(`/BnOApi/updateCart/${cartId}`, {
       method: 'POST',
+      headers: {
+        'X-B&O-API-AccessToken': accessToken
+      },
       body: JSON.stringify({
         version: 4,
         actions: [

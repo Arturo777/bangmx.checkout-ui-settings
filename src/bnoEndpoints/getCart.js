@@ -22,8 +22,11 @@ module.exports = async () => {
   vtexjs.checkout.removeAllItems()
   const accessToken = await getAccessToken()
 
-  fetch(`/BnOApi/getCart/${cartId}/${accessToken}`, {
+  fetch(`/BnOApi/getCart/${cartId}`, {
     method: 'GET',
+    headers: {
+      'X-B&O-API-AccessToken': accessToken
+    }
   })
   .then(x => x.json())
   .then(cart => {
@@ -51,7 +54,7 @@ module.exports = async () => {
       CartId: cartId,
       BNOSkuID: item.sku,
       BNOSkuName: item.variant.key,
-      BNOPrice: item.price.value.centAmount,
+      BNOPrice: item.price.value.centAmount || item.variant.prices[0].value.centAmount,
       BNOQuantity: item.quantity,
     }))
 
