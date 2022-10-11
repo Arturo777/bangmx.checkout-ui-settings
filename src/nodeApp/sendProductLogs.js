@@ -1,4 +1,4 @@
-module.exports = bodies => {
+export const sendProductLogs = bodies => {
   bodies.length &&
     bodies.map(body => {
       try {

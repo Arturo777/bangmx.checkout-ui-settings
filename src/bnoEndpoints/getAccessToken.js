@@ -1,4 +1,4 @@
-const getAccessToken = () => {
+export const getAccessToken = () => {
   return fetch('/BnOApi/getToken/', {
     method: 'POST',
     headers: {
@@ -20,4 +20,3 @@ const getAccessToken = () => {
   })
 }
 
-module.exports = getAccessToken

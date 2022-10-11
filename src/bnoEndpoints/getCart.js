@@ -1,8 +1,8 @@
-const getAccessToken = require("./getAccessToken")
-const compareProducts = require("../utils/compareProducts")
-const removeLoadingSpinner = require("../utils/removeLoadingSpinner")
+import { getAccessToken } from "./getAccessToken"
+import { compareProducts } from "../utils/compareProducts"
+import { removeLoadingSpinner } from "../utils/removeLoadingSpinner"
 
-module.exports = async () => {
+export const getCart = async () => {
   const queryString = window.location.search
   const urlParams = new URLSearchParams(queryString)
   const cartId = urlParams.get('cartId')?.replace('/', '') || null
@@ -30,6 +30,7 @@ module.exports = async () => {
   })
   .then(x => x.json())
   .then(cart => {
+    debugger
     if (!cart.lineItems) {
       // enviar a carrito vacio
       sessionStorage.removeItem('bnoItems')
@@ -47,6 +48,7 @@ module.exports = async () => {
       return acc.concat(`sku=${el.sku}&qty=${el.quantity}&seller=1&sc=1&`)
     }, `/checkout/cart/add/?`)
 
+    console.log({lineItems});
     return {lineItems, newUrlCart, cartId}
   })
   .then(({lineItems, newUrlCart, cartId}) => {

@@ -1,7 +1,7 @@
-const sendProductLogs = require("../nodeApp/sendProductLogs")
-const getVtexSkuByProductId = require("../vtexAPI/getVtexSkuByProductId")
+import { sendProductLogs } from "../nodeApp/sendProductLogs"
+import { getVtexSkuByProductId } from "../vtexAPI/getVtexSkuByProductId"
 
-module.exports = async () => {
+export const compareProducts = async () => {
   const vtexProducts = []
 
   try {

@@ -1,4 +1,5 @@
-const getCart = require("./bnoEndpoints/getCart")
+import { getCart } from "./bnoEndpoints/getCart"
+import "./index.css"
 
 const addBeoSupremeFont = () => {
   const linkElement = document.createElement('link')
@@ -327,6 +328,7 @@ document.addEventListener('readystatechange', () => {
   titleCartSummary.innerHTML = 'Resumen del pedido'
 
   if (document.readyState === "interactive") {
+    // addBeoSupremeFont()
     document.querySelector('.checkout-container').style.display = 'none'
 
     createContainer({
@@ -375,8 +377,6 @@ document.addEventListener('readystatechange', () => {
   }
 
   if (document.readyState === "complete") {
-    // addBeoSupremeFont()
-
     if (location.hash === '#/cart') {
       if (document.querySelector('#cart-choose-products')) {
         document.querySelector('#cart-choose-products').setAttribute('href', 'https://www.bang-olufsen.com/es/mx')
