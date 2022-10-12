@@ -473,12 +473,21 @@ document.addEventListener('readystatechange', () => {
 
     clientData.prepend(progressBar('33.3%'))
 
-    changeElement('#go-to-shipping', 'Siguiente')
-    changeElement('#btn-go-to-payment', 'Siguiente')
-    changeElement('.custom-cart-template-wrap > h2', 'DETALLES DEL PEDIDO')
-    changeElement('.orderform-template .cart-template.mini-cart .summary-totalizers tfoot tr td.info', 'Total del pedido')
-    changeElement('.full-cart .totalizers tfoot td', 'Total del pedido')
-    changeElement('.summary-template-holder .cart-links-bottom .btn-success', 'Compra segura')
+
+    const i = setInterval(() => {
+      if (document.querySelector('.summary-template-holder .cart-links-bottom .btn-success').innerText !== `Compra segura`) {
+        changeElement('#go-to-shipping', 'Siguiente')
+        changeElement('#btn-go-to-payment', 'Siguiente')
+        changeElement('.custom-cart-template-wrap > h2', 'DETALLES DEL PEDIDO')
+        changeElement('.orderform-template .cart-template.mini-cart .summary-totalizers tfoot tr td.info', 'Total del pedido')
+        changeElement('.full-cart .totalizers tfoot td', 'Total del pedido')
+        changeElement('.summary-template-holder .cart-links-bottom .btn-success', 'Compra segura')
+      }
+    }, 500);
+
+    setTimeout(() => {
+      clearInterval(i)
+    }, 10000);
 
     handleInputFocus([
       'client-email',
