@@ -1,16 +1,17 @@
 import { getCart } from "./bnoEndpoints/getCart"
 import "./index.css"
+import { removeLinks } from './utils/removeLinks'
 
-const addBeoSupremeFont = () => {
-  const linkElement = document.createElement('link')
-  linkElement.setAttribute('rel', 'stylesheet');
-  linkElement.setAttribute('type', 'text/css');
-  linkElement.setAttribute('href', 'https://cloud.typography.com/6462894/7475632/css/fonts.css')
-  linkElement.setAttribute('media', 'all')
+// const addBeoSupremeFont = () => {
+//   const linkElement = document.createElement('link')
+//   linkElement.setAttribute('rel', 'stylesheet');
+//   linkElement.setAttribute('type', 'text/css');
+//   linkElement.setAttribute('href', 'https://cloud.typography.com/6462894/7475632/css/fonts.css')
+//   linkElement.setAttribute('media', 'all')
 
-  document.head.appendChild(linkElement)
+//   document.head.appendChild(linkElement)
 
-}
+// }
 
 const handleInputFocus = elements => {
   for (let i = 0; i < elements.length; i++) {
@@ -112,6 +113,17 @@ window.onload = function() {
   getCart()
 
   $(window).on('orderFormUpdated.vtex', async function(_, orderForm) {
+
+    removeLinks()
+    setTimeout(() => {
+      changeElement('#go-to-shipping', 'Siguiente')
+      changeElement('#go-to-payment', 'Siguiente')
+      changeElement('#btn-go-to-shipping', 'Siguiente')
+      changeElement('#btn-go-to-payment', 'Siguiente')
+      changeElement('.custom-cart-template-wrap > h2', 'DETALLES DEL PEDIDO')
+      changeElement('.orderform-template .cart-template.mini-cart .summary-totalizers tfoot tr td.info', 'Total del pedido')
+      changeElement('.summary-template-holder .cart-links-bottom .btn-success', 'Compra segura')
+    }, 1500);
 
     const accessToken = sessionStorage.getItem('accessToken')
     if (!accessToken) return
@@ -230,10 +242,7 @@ window.addEventListener('hashchange', function() {
     document.querySelector('#client-profile-data').style.display = 'block'
     document.querySelector('#shipping-data').style.display = 'none'
     document.querySelector('#payment-data').style.display = 'none'
-    changeElement('#go-to-shipping', 'Siguiente')
-    changeElement('#btn-go-to-shipping', 'Siguiente')
-    changeElement('#btn-go-to-payment', 'Siguiente')
-    changeElement('#go-to-payment', 'Siguiente')
+
 
     handleLabels([
       'client-email',
@@ -247,8 +256,6 @@ window.addEventListener('hashchange', function() {
     document.querySelector('#client-profile-data').style.display = 'none'
     document.querySelector('#shipping-data').style.display = 'flex'
     document.querySelector('#payment-data').style.display = 'none'
-    changeElement('#go-to-shipping', 'Siguiente')
-    changeElement('#btn-go-to-payment', 'Siguiente')
 
     const shippingTitle = document.createElement('p')
     shippingTitle.innerHTML = 'Introduce la dirección de entrega'
@@ -384,10 +391,10 @@ document.addEventListener('readystatechange', () => {
 
       document.querySelector('div.headers.checkout').style.display = 'none'
 
-      document.querySelectorAll(".product-item a").forEach((element) => {
-        element.setAttribute('href', 'javascript:void(0)')
-        element.style.cursor = 'default'
-      })
+      // document.querySelectorAll(".product-item a").forEach((element) => {
+      //   element.setAttribute('href', 'javascript:void(0)')
+      //   element.style.cursor = 'default'
+      // })
 
 
     } else {
@@ -475,14 +482,9 @@ document.addEventListener('readystatechange', () => {
 
 
     const i = setInterval(() => {
-      if (document.querySelector('.summary-template-holder .cart-links-bottom .btn-success').innerText !== `Compra segura`) {
-        changeElement('#go-to-shipping', 'Siguiente')
-        changeElement('#btn-go-to-payment', 'Siguiente')
-        changeElement('.custom-cart-template-wrap > h2', 'DETALLES DEL PEDIDO')
-        changeElement('.orderform-template .cart-template.mini-cart .summary-totalizers tfoot tr td.info', 'Total del pedido')
-        changeElement('.full-cart .totalizers tfoot td', 'Total del pedido')
-        changeElement('.summary-template-holder .cart-links-bottom .btn-success', 'Compra segura')
-      }
+      // if (document.querySelector('.summary-template-holder .cart-links-bottom .btn-success').innerText !== `Compra segura`) {
+
+      // }
     }, 500);
 
     setTimeout(() => {
