@@ -27,7 +27,13 @@ Once the app is deployed and installed in the account, every scripts contained i
 
 :warning: **Scripts used by Checkout are linked to the Checkout UI Settings version that's installed in your store**. If a prior app version was already installed and your want to change the scripts linked to it, you'll need to repeat the already existing code and thereafter launch the app's new version containing the changes you just did. Housekeeper is responsible for updating app versions in the accounts it's installed in.
 
+## Thank you page
+https://uat.bang-olufsen.com/es/mx/orders?id={cartid}
+
+
+
 ## Redirect to checkout cart
+
 
 ### Elemplo de redirect
 https://checkout--bangmx.myvtex.com/checkout/cart/add/?sku=1734013&qty=1&seller=1&sc=1&sku=1200465&qty=1&seller=1&sc=1&

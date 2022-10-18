@@ -133,6 +133,7 @@ body {
   color: #000000;
   font-weight: 400;
   font-size: 16px;
+  white-space: nowrap;
 }
 
 /* .forms.coupon-column.summary-coupon-wrap.text-center {
