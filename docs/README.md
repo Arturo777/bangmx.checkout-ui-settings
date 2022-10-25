@@ -38,10 +38,10 @@ https://uat.bang-olufsen.com/es/mx/orders?id={cartid}
 ### Elemplo de redirect
 https://checkout--bangmx.myvtex.com/checkout/cart/add/?sku=1734013&qty=1&seller=1&sc=1&sku=1200465&qty=1&seller=1&sc=1&
 
-### Item no disponible: 
+### Item no disponible:
 https://checkout--bangmx.myvtex.com/checkout?cartId=tFXRtvGpdjsZyD_8JoVHwHfWgQG1HdAbt1XV8Ix7RMPzeDh_-h4mHkpfHGS3uIok/#/cart
 
-### Carrito vacío: 
+### Carrito vacío:
 https://checkout--bangmx.myvtex.com/checkout?cartId=m-AHQgXS0zdRhCTU3YItKKtrP78nrLQus7MMPeaalZJ2f-jM5kylMnKi3JWpVBaD/#/cart
 
 ### Get Cart Failed: 
@@ -94,3 +94,58 @@ https://checkout--bangmx.myvtex.com/checkout?cartId=ZvwxPuqhdSiEyqTAbxw629xY_Y9h
 
 ### 2 products:
 https://checkout--bangmx.myvtex.com/checkout?cartId=32TVbysyEXydCivABTpjytnhnSN1svgsszuC81nFJglPB786N6U3jdmLilfGl8YS/#/cart
+
+## Latest carts
+
+### 2 skus
+- 1235400
+- 1235402
+https://checkout--bangmx.myvtex.com/checkout?cartId=cartId=SzXvcIzkqluUBwnkJvay8KFEZmugd2YAIcMT6hmUfTWK8CAJ-jYzS9eBl3w1TkQ0/#/cart
+
+### 1 skus
+- 1240000
+https://checkout--bangmx.myvtex.com/checkout?cartId=dbzBVJ8Jr7ATh077PYNUcpVRVifAMM9Sr3onk1tEuWQzS3NqMpo_971-r1F2vp2W/#/cart
+
+### 2 skus
+- 1626000
+- 1626004
+https://checkout--bangmx.myvtex.com/checkout?cartId=IVgAccYpvZrxHcSFZwQOLH7RVdaOndytfJN1V7WIJPMjuC3Ng3swGywYq7PnWbKZ/#/cart
+
+### 2 skus
+- 1646300
+- 1646301 
+https://checkout--bangmx.myvtex.com/checkout?cartId=RYH3gm0Mi1YhB5G63vgd5lI6lEtazu2AAw54E-haMFigGm_4a3iHqa9AmqkaqsfA/#/cart
+
+Thank you page
+https://uat.bang-olufsen.com/es/mx/orders?id=RYH3gm0Mi1YhB5G63vgd5lI6lEtazu2AAw54E-haMFigGm_4a3iHqa9AmqkaqsfA
+
+### 1 sku
+- 1734002
+https://checkout--bangmx.myvtex.com/checkout?cartId=624XboElPZkB-msnZTQkpV4ohdxZdIacHwlDzt9PMAkesqzNks530R3G9ngh4qGa/#/cart
+
+### 2 skus
+- 1224000
+- 1224001 
+https://checkout--bangmx.myvtex.com/checkout?cartId=u6yX9EqdoWpv6dMeAOOZpNIzdM2Yjz1AVaqv4n46jCD6CGfdno4W0uDyUTidkU0C/#/cart
+
+### 2 skus
+- 1734012
+- 1734013 – {"id":"8OMWdmJ42siH_3AAirlrdi3OYyJkd1L-h8bJwd42OGQDs2ZzDryNcJD9z0wrZ818","version":3}
+https://checkout--bangmx.myvtex.com/checkout?cartId=8OMWdmJ42siH_3AAirlrdi3OYyJkd1L-h8bJwd42OGQDs2ZzDryNcJD9z0wrZ818/#/cart
+
+CURL: 
+curl --location --request GET 'https://beoecommerceapimanagementuat.azure-api.net/api/tpecomoperations/v1/cart?id=8OMWdmJ42siH_3AAirlrdi3OYyJkd1L-h8bJwd42OGQDs2ZzDryNcJD9z0wrZ818' \
+--header 'Country: MX' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZmZWNlN2FjLWYzNTMtNDAwMi04MTM3LTY2ZDUwNzMyMTYwNSIsIm5iZiI6MTY2NjYzMTgzNCwiZXhwIjoxNjY3MjM2NjM0LCJpYXQiOjE2NjY2MzE4MzR9.1cNNVkU4hiwdds3zcFz6UsIuuNbcglQV16MD5BRvoGo' \
+--header 'Locale: en'
+
+response:
+{
+    "error": {
+        "code": "APICD001",
+        "text": "Get cart failed",
+        "statusCode": 200,
+        "switchToCountry": null,
+        "type": "getCartFailed"
+    }
+}
