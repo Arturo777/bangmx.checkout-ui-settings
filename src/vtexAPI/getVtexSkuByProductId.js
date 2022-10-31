@@ -10,3 +10,4 @@ export const getVtexSkuByProductId = (productId, skuId)  => {
     throw new Error(error)
   })
 }
+

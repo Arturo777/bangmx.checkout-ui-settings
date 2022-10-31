@@ -1,4 +1,4 @@
-export const updateCart = (cartId, orderForm) => {
+export const updateCart = (cartId, orderForm, accessToken) => {
   const { clientProfileData, shippingData: { selectedAddresses } } = orderForm
   const [selectedAddress] = selectedAddresses
 

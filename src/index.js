@@ -2,6 +2,7 @@ import { getCart } from "./bnoEndpoints/getCart"
 import { updateCart } from "./bnoEndpoints/updateCart"
 import "./index.css"
 import { removeLinks } from './utils/removeLinks'
+import { putCartIdInOrderForm } from './vtexAPI/putCartIdInOrderForm'
 
 // const addBeoSupremeFont = () => {
 //   const linkElement = document.createElement('link')
@@ -131,7 +132,13 @@ window.onload = function() {
 
     const cartId = sessionStorage.getItem('cartId')
 
-    updateCart(cartId, orderForm)
+    updateCart(cartId, orderForm, accessToken)
+
+    if (!orderForm.customData) {
+      putCartIdInOrderForm(cartId, orderForm.orderFormId)
+    }
+
+    debugger
   })
 }
 
