@@ -137,8 +137,6 @@ window.onload = function() {
     if (!orderForm.customData) {
       putCartIdInOrderForm(cartId, orderForm.orderFormId)
     }
-
-    debugger
   })
 }
 

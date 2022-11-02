@@ -15,6 +15,8 @@ export const getCart = async () => {
       // vtexjs.checkout.removeAllItems()
     }
 
+    window.location.hash = '#/profile'
+
     return removeLoadingSpinner()
   }
 
@@ -30,7 +32,6 @@ export const getCart = async () => {
   })
   .then(x => x.json())
   .then(cart => {
-    debugger
     if (!cart.lineItems) {
       // enviar a carrito vacio
       sessionStorage.removeItem('bnoItems')
