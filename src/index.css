@@ -978,4 +978,15 @@ p.client-email.input.text.required + p {
   display: none !important;
 }
 
+.orderform-template-holder #payment-data .v-custom-payment-item-wrap .payment-group-item#payment-group-payPalPaymentGroup:after {
+  background: url(https://bangmx.vteximg.com.br/arquivos/pay-pal.png)right no-repeat;
+}
+
+.orderform-template-holder #payment-data .v-custom-payment-item-wrap .payment-group-item-cards {
+  background: url(https://bangmx.vteximg.com.br/arquivos/credit-card.png)right no-repeat !important;
+    display: block;
+    width: 50px;
+    position: static;
+    height: 25px;
+}
 

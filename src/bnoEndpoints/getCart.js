@@ -11,8 +11,7 @@ export const getCart = async () => {
     if (sessionStorage.getItem('bnoItems')) {
       compareProducts()
     } else {
-      console.log('No removed items for payments testing')
-      // vtexjs.checkout.removeAllItems()
+      vtexjs.checkout.removeAllItems()
     }
 
     window.location.hash = '#/profile'

@@ -105,6 +105,7 @@ https://checkout--bangmx.myvtex.com/checkout?cartId=cartId=SzXvcIzkqluUBwnkJvay8
 ### 1 skus
 - 1240000
 https://checkout--bangmx.myvtex.com/checkout?cartId=dbzBVJ8Jr7ATh077PYNUcpVRVifAMM9Sr3onk1tEuWQzS3NqMpo_971-r1F2vp2W/#/cart
+https://testprod--bangmx.myvtex.com/checkout?cartId=dbzBVJ8Jr7ATh077PYNUcpVRVifAMM9Sr3onk1tEuWQzS3NqMpo_971-r1F2vp2W/#/cart
 
 ### 2 skus
 - 1626000
@@ -122,6 +123,12 @@ https://uat.bang-olufsen.com/es/mx/orders?id=RYH3gm0Mi1YhB5G63vgd5lI6lEtazu2AAw5
 ### 1 sku
 - 1734002
 https://checkout--bangmx.myvtex.com/checkout?cartId=624XboElPZkB-msnZTQkpV4ohdxZdIacHwlDzt9PMAkesqzNks530R3G9ngh4qGa/#/cart
+
+### 1 sku
+- 1626000
+https://devcheckout--bangmx.myvtex.com/checkout?cartId=EAGA3Nk5aEJ25tnXejcYdFxXp4z43iznDdJnB1fjwnC9mCwLSq5mLjtRrclPDS3o/#/cart
+
+https://checkout--bangmx.myvtex.com/checkout?cartId=EAGA3Nk5aEJ25tnXejcYdFxXp4z43iznDdJnB1fjwnC9mCwLSq5mLjtRrclPDS3o/#/cart
 
 ### 2 skus
 - 1224000
@@ -149,3 +156,15 @@ response:
         "type": "getCartFailed"
     }
 }
+
+
+## footer cambio
+Cambios y devoluciones
+Todas tus compras con nosotros cuentan con cambios y devoluciones sin costo.
+
+## header cambio
+Header:
+Ocultar todos menos cart y (logo - nueva pestaña)
+
+## iconos de xiaomi
+lo iconos del pago
