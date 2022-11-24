@@ -990,3 +990,24 @@ p.client-email.input.text.required + p {
     height: 25px;
 }
 
+button.checkEmailAuthConflict__modal--button {
+  background: rgb(255, 195, 86);
+  border-radius: 24px;
+  width: 50%;
+  font-weight: 500;
+  color: #000;
+  font-size: 17px;
+  line-height: 20px;
+}
+
+button#loginWithAccessKeyBtn {
+  background: rgb(255, 195, 86) !important;
+  border: none !important;
+  width: 100%;
+  font-weight: 500;
+  color: #000;
+}
+
+button#loginWithUserAndPasswordBtn {
+  background: none;
+}

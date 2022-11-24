@@ -76,6 +76,7 @@ https://checkout--bangmx.myvtex.com/checkout?cartId=GtJVwv9le3qXgub3uXxoz3SVZ06L
 
 ### Empty cart:
 https://checkout--bangmx.myvtex.com/checkout?cartId=71B_4UveB92ctpGCLRbBVvbUn0AkkoYCkrNcAz3DjLL1lLVDGiEEfX7nqXVBH-L1/#/cart
+https://devcheckout--bangmx.myvtex.com/checkout?cartId=EAGA3Nk5aEJ25tnXejcYdFxXp4z43iznDdJnB1fjwnC9mCwLSq5mLjtRrclPDS3o/#/cart
 
 ### Error:
 ```
@@ -157,14 +158,14 @@ response:
     }
 }
 
+### 1 skus
+{
+  "name": "Beosound A1 2nd Gen",
+  "sku": "1734012",
+}
+https://devcheckout--bangmx.myvtex.com/checkout?cartId=5LU5bchMe9NHnhQBjzqn9f0Of815i9SM4XYpMdwoLv2Gk977BcuJfGj1mdRFosap/#/cart
+https://checkout--bangmx.myvtex.com/checkout?cartId=5LU5bchMe9NHnhQBjzqn9f0Of815i9SM4XYpMdwoLv2Gk977BcuJfGj1mdRFosap/#/cart
 
-## footer cambio
-Cambios y devoluciones
-Todas tus compras con nosotros cuentan con cambios y devoluciones sin costo.
-
-## header cambio
-Header:
-Ocultar todos menos cart y (logo - nueva pestaña)
-
-## iconos de xiaomi
-lo iconos del pago
+### 1 skus
+{}
+https://devcheckout--bangmx.myvtex.com/checkout?cartId=mEZBxNUT2LcOfNluMqzFuBXUKYtITSOzLW3p9limvoa8HWhc3GXT84OXpjVUTKRx/#/cart

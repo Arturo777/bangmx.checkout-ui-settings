@@ -80,6 +80,7 @@ const createContainer = (
 }
 
 const createBackButton = (id, parent) => {
+  if (!document.querySelector(`#${id}`)) return
   const backButton = document.createElement('button')
   backButton.innerHTML = 'Atrás'
   backButton.classList.add(`back-button`)
@@ -92,7 +93,7 @@ const createBackButton = (id, parent) => {
   })
 
   backButton.addEventListener('click', () => {
-    document.querySelector(`#${id}`).click()
+      document.querySelector(`#${id}`).click()
   })
 
   return backButton
@@ -270,16 +271,12 @@ window.addEventListener('hashchange', function() {
     const anchorMercadoPago = document.querySelector('a#payment-group-MercadoPagoWalletPaymentGroup')
     const mercadoPagoImg = document.createElement('img')
     mercadoPagoImg.setAttribute('src', '/arquivos/mercago-pago.png')
-    anchorMercadoPago.append(mercadoPagoImg)
-    anchorMercadoPago.append(mercadoPagoImg)
+    anchorMercadoPago?.append(mercadoPagoImg)
     const cartIcons = document.querySelectorAll(".payment-group-item-cards")
 
     cartIcons.forEach(icon => {
       icon.innerText = ''
     })
-
-    const kueskiLogo = document.querySelector('.kpay-logo_img')
-    kueskiLogo.setAttribute('src', '/arquivos/mercago-pago.png')
   }
 })
 
@@ -431,7 +428,7 @@ document.addEventListener('readystatechange', () => {
       })
 
       const kueskiLogo = document.querySelector('.kpay-logo_img')
-      kueskiLogo.setAttribute('src', '/arquivos/mercago-pago.png')
+      kueskiLogo?.setAttribute('src', '/arquivos/mercago-pago.png')
     }
 
     document.querySelector('#go-to-shipping').addEventListener('mouseleave', event => {
