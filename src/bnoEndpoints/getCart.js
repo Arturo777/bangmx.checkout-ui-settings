@@ -1,6 +1,7 @@
 import { getAccessToken } from "./getAccessToken"
 import { compareProducts } from "../utils/compareProducts"
 import { removeLoadingSpinner } from "../utils/removeLoadingSpinner"
+import { getSkuByRefId } from "../vtexAPI/getSkuByRefId"
 
 export const getCart = async () => {
   const queryString = window.location.search
@@ -30,7 +31,7 @@ export const getCart = async () => {
     }
   })
   .then(x => x.json())
-  .then(cart => {
+  .then(async cart => {
     if (!cart.lineItems) {
       // enviar a carrito vacio
       sessionStorage.removeItem('bnoItems')
@@ -44,15 +45,24 @@ export const getCart = async () => {
       return window.location = 'checkout#/cart'
     }
 
-    const newUrlCart = lineItems.reduce((acc, el) => {
-      return acc.concat(`sku=${el.sku}&qty=${el.quantity}&seller=1&sc=1&`)
+    const newLineItemsPromises = lineItems.map(item => {
+      return {
+        ...item,
+        vtexSku: getSkuByRefId(item.sku)
+      }
+    })
+
+    const newLineItems = await Promise.all(newLineItemsPromises)
+
+    const newUrlCart = newLineItems.reduce((acc, el) => {
+      return acc.concat(`sku=${el.vtexSku}&qty=${el.quantity}&seller=1&sc=1&`)
     }, `/checkout/cart/add/?`)
 
     console.log({lineItems});
-    return {lineItems, newUrlCart, cartId}
+    return {newLineItems, newUrlCart, cartId}
   })
-  .then(({lineItems, newUrlCart, cartId}) => {
-    const bnoItems = lineItems.map(item => ({
+  .then(({newLineItems, newUrlCart, cartId}) => {
+    const bnoItems = newLineItems.map(item => ({
       CartId: cartId,
       BNOSkuID: item.sku,
       BNOSkuName: item.variant.key,
