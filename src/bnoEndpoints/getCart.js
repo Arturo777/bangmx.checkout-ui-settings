@@ -1,7 +1,7 @@
 import { getAccessToken } from "./getAccessToken"
 import { compareProducts } from "../utils/compareProducts"
 import { removeLoadingSpinner } from "../utils/removeLoadingSpinner"
-import { getSkuByRefId } from "../vtexAPI/getSkuByRefId"
+import { getSkusByRefIds } from "../vtexAPI/getSkuByRefId"
 
 export const getCart = async () => {
   const queryString = window.location.search
@@ -45,10 +45,12 @@ export const getCart = async () => {
       return window.location = 'checkout#/cart'
     }
 
-    const newLineItemsPromises = lineItems.map(item => {
+    const newLineItemsPromises = lineItems.map(async item => {
+      const vtexSku = await getSkusByRefIds([item.sku])
+
       return {
         ...item,
-        vtexSku: getSkuByRefId(item.sku)
+        vtexSku,
       }
     })
 
@@ -59,10 +61,10 @@ export const getCart = async () => {
     }, `/checkout/cart/add/?`)
 
     console.log({lineItems});
-    return {newLineItems, newUrlCart, cartId}
+    return {lineItems, newUrlCart, cartId}
   })
-  .then(({newLineItems, newUrlCart, cartId}) => {
-    const bnoItems = newLineItems.map(item => ({
+  .then(({lineItems, newUrlCart, cartId}) => {
+    const bnoItems = lineItems.map(item => ({
       CartId: cartId,
       BNOSkuID: item.sku,
       BNOSkuName: item.variant.key,
@@ -79,6 +81,6 @@ export const getCart = async () => {
       error: error.message,
     })
 
-    window.location = 'https://www.bang-olufsen.com/es/mx/cart'
+    // window.location = 'https://www.bang-olufsen.com/es/mx/cart'
   })
 }

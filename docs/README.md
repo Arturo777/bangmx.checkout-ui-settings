@@ -169,3 +169,5 @@ https://checkout--bangmx.myvtex.com/checkout?cartId=5LU5bchMe9NHnhQBjzqn9f0Of815
 ### 1 skus
 {}
 https://devcheckout--bangmx.myvtex.com/checkout?cartId=mEZBxNUT2LcOfNluMqzFuBXUKYtITSOzLW3p9limvoa8HWhc3GXT84OXpjVUTKRx/#/cart
+
+https://devcheckout--bangmx.myvtex.com/checkout?cartId=pKZiqZ7-ZxIEjh4-w6o-VfJSBuiNAcJwlBoMGdPVjX6re3HBZhz_UGk5YQSDlhc8&language=en/#/cart
