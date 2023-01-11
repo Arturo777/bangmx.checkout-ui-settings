@@ -9,7 +9,7 @@ export const compareProducts = async () => {
 
     vtexProducts.push(...items.map(item => ({
       productId: item.productId,
-      skuId: item.id
+      skuId: item.id,
     })))
   } catch (error) {
     console.log({
@@ -27,8 +27,6 @@ export const compareProducts = async () => {
 
   const vtexItems = await Promise.all(vtexItemsPromise)
 
-  console.log({vtexItems});
-
   if (!sessionStorage.getItem('bnoItems')) return
   const bnoItems = JSON.parse(sessionStorage.getItem('bnoItems'))
 
@@ -42,6 +40,10 @@ export const compareProducts = async () => {
     return item.BNOPrice !== item.VTEXPrice ||
     item.BNOQuantity !== item.VTEXQuantity
   })
+
+  console.log({ differentItems })
+
+  debugger
 
   sendProductLogs(differentItems)
 }

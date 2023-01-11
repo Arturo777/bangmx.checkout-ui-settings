@@ -81,6 +81,6 @@ export const getCart = async () => {
       error: error.message,
     })
 
-    // window.location = 'https://www.bang-olufsen.com/es/mx/cart'
+    window.location = 'https://www.bang-olufsen.com/es/mx/cart'
   })
 }
