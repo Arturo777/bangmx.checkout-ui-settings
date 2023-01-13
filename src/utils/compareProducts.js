@@ -43,7 +43,5 @@ export const compareProducts = async () => {
 
   console.log({ differentItems })
 
-  debugger
-
   sendProductLogs(differentItems)
 }

@@ -1011,3 +1011,7 @@ button#loginWithAccessKeyBtn {
 button#loginWithUserAndPasswordBtn {
   background: none;
 }
+
+.card-flag {
+  display: none !important;
+}
