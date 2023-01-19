@@ -7,6 +7,7 @@ export const getCart = async () => {
   const queryString = window.location.search
   const urlParams = new URLSearchParams(queryString)
   const cartId = urlParams.get('cartId')?.replace('/', '') || null
+  const language = urlParams.get('language')?.replace('/', '') || null
 
   if (!cartId) {
     if (sessionStorage.getItem('bnoItems')) {
@@ -21,6 +22,7 @@ export const getCart = async () => {
   }
 
   sessionStorage.setItem('cartId', cartId)
+  sessionStorage.setItem('language', language)
   vtexjs.checkout.removeAllItems()
   const accessToken = await getAccessToken()
 
