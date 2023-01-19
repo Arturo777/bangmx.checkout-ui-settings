@@ -68,7 +68,7 @@ export const getCart = async () => {
       CartId: cartId,
       BNOSkuID: item.sku,
       BNOSkuName: item.variant.key,
-      BNOPrice: item.price.value.centAmount || item.variant.prices[0].value.centAmount,
+      BNOPrice: ((item.price.value.centAmount || item.variant.prices[0].value.centAmount) / 100).toFixed(2),
       BNOQuantity: item.quantity,
     }))
 
