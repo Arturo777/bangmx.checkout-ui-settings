@@ -27,10 +27,11 @@ export const getCart = async () => {
   const accessToken = await getAccessToken()
 
   fetch(`/BnOApi/getCart/${cartId}`, {
-    method: 'GET',
-    headers: {
-      'X-B&O-API-AccessToken': accessToken
-    }
+    method: 'POST',
+    body: JSON.stringify({
+      cartId,
+      accessToken
+    })
   })
   .then(x => x.json())
   .then(async cart => {
