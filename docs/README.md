@@ -172,4 +172,4 @@ https://devcheckout--bangmx.myvtex.com/checkout?cartId=mEZBxNUT2LcOfNluMqzFuBXUK
 
 https://devcheckout--bangmx.myvtex.com/checkout?cartId=pKZiqZ7-ZxIEjh4-w6o-VfJSBuiNAcJwlBoMGdPVjX6re3HBZhz_UGk5YQSDlhc8&language=en/#/cart
 
-https://checkout--bangmx.myvtex.com/checkout?cartId=pKZiqZ7-ZxIEjh4-w6o-VfJSBuiNAcJwlBoMGdPVjX6re3HBZhz_UGk5YQSDlhc8&language=en/#/cart
+https://vic--bangmx.myvtex.com/checkout?cartId=62y2olojCQuG29Uf9mhrJ2amOlUA_IuoHEknskxdQf3hmtuNIDlPxW6NhO1MPALk&language=en/#/cart
