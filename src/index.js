@@ -272,6 +272,13 @@ window.addEventListener('hashchange', function() {
     const mercadoPagoImg = document.createElement('img')
     mercadoPagoImg.setAttribute('src', '/arquivos/mercago-pago.png')
     anchorMercadoPago?.append(mercadoPagoImg)
+
+    const anchorKueski = document.querySelector('a#payment-group-custom201PaymentGroupPaymentGroup')
+    const kueskiImg = document.createElement('img')
+    kueskiImg.setAttribute('src', 'https://kueski.com/images/pics/KueskiFB.png?v=1')
+    kueskiImg.style.width = '23px'
+    anchorKueski.append(kueskiImg)
+
     const cartIcons = document.querySelectorAll(".payment-group-item-cards")
 
     cartIcons.forEach(icon => {
@@ -420,15 +427,19 @@ document.addEventListener('readystatechange', () => {
       const mercadoPagoImg = document.createElement('img')
       mercadoPagoImg.setAttribute('src', '/arquivos/mercago-pago.png')
       anchorMercadoPago.append(mercadoPagoImg)
-      anchorMercadoPago.append(mercadoPagoImg)
+
+      const anchorKueski = document.querySelector('a#payment-group-custom201PaymentGroupPaymentGroup')
+      const kueskiImg = document.createElement('img')
+      kueskiImg.setAttribute('src', 'https://kueski.com/images/pics/KueskiFB.png?v=1')
+      kueskiImg.style.width = '23px'
+      anchorKueski.append(kueskiImg)
+
 
       const cartIcons = document.querySelectorAll(".payment-group-item-cards")
       cartIcons.forEach(icon => {
         icon.innerText = ''
       })
 
-      const kueskiLogo = document.querySelector('.kpay-logo_img')
-      kueskiLogo?.setAttribute('src', '/arquivos/mercago-pago.png')
     }
 
     document.querySelector('#go-to-shipping').addEventListener('mouseleave', event => {
